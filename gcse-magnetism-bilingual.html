@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE Magnetism 磁学 | AQA Higher Tier</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a0f;
+    --surface: rgba(8,16,30,0.92);
+    --mag-blue: #60a5fa;
+    --mag-teal: #34d399;
+    --mag-red: #f87171;
+    --mag-gold: #fbbf24;
+    --mag-purple: #a78bfa;
+    --border: rgba(96,165,250,0.22);
+    --text: #e2eaf8;
+    --muted: rgba(226,234,248,0.48);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content:''; position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse at 10% 30%, rgba(96,165,250,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 60%, rgba(167,139,250,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(52,211,153,0.05) 0%, transparent 45%);
+    pointer-events:none; z-index:0;
+  }
+  .container { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:0 20px 80px; }
+
+  /* HEADER */
+  header { text-align:center; padding:50px 20px 35px; }
+  .header-badge {
+    display:inline-block; background:rgba(96,165,250,0.1);
+    border:1px solid var(--mag-blue); color:var(--mag-blue);
+    font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:3px;
+    padding:5px 16px; border-radius:20px; margin-bottom:18px; text-transform:uppercase;
+  }
+  h1 {
+    font-family:'Orbitron',sans-serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:900;
+    background:linear-gradient(135deg,var(--mag-blue),var(--mag-purple),var(--mag-teal));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    line-height:1.1; margin-bottom:10px;
+  }
+  .subtitle-cn { font-size:1.5rem; color:rgba(226,234,248,0.55); font-weight:300; letter-spacing:5px; margin-bottom:6px; }
+  .subtitle-en { font-family:'Space Mono',monospace; font-size:0.75rem; color:rgba(226,234,248,0.35); letter-spacing:2px; }
+
+  /* NAV */
+  .nav-tabs { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:28px 0; }
+  .tab-btn {
+    background:rgba(8,16,30,0.8); border:1px solid var(--border);
+    color:var(--muted); padding:10px 18px; border-radius:30px;
+    cursor:pointer; font-family:'Noto Sans SC',sans-serif;
+    font-size:0.82rem; transition:all 0.3s; white-space:nowrap;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background:rgba(96,165,250,0.12); border-color:var(--mag-blue);
+    color:var(--mag-blue); box-shadow:0 0 18px rgba(96,165,250,0.18);
+  }
+  .tab-btn .cn { display:block; font-size:0.68rem; opacity:0.65; margin-top:2px; }
+
+  /* SECTIONS */
+  .section { display:none; animation:fadeIn 0.35s ease; }
+  .section.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .section-title {
+    font-family:'Orbitron',sans-serif; font-size:1.2rem; color:var(--mag-blue);
+    margin-bottom:5px; display:flex; align-items:center; gap:10px;
+  }
+  .section-title::before { content:''; width:4px; height:22px; background:var(--mag-blue); border-radius:2px; display:inline-block; }
+  .section-cn { color:var(--muted); font-size:0.88rem; margin-bottom:22px; padding-left:14px; }
+
+  /* CARDS */
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(295px,1fr)); gap:14px; margin-top:18px; }
+  .concept-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:18px; cursor:pointer; transition:all 0.3s; overflow:hidden;
+  }
+  .concept-card:hover { border-color:var(--mag-blue); box-shadow:0 0 24px rgba(96,165,250,0.13); transform:translateY(-2px); }
+  .concept-card.expanded { border-color:var(--mag-gold); box-shadow:0 0 24px rgba(251,191,36,0.12); }
+  .card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card-icon { font-size:1.7rem; line-height:1; }
+  .card-terms { flex:1; }
+  .term-en { font-family:'Space Mono',monospace; font-size:0.9rem; color:var(--mag-gold); font-weight:700; }
+  .term-cn { font-size:1.05rem; color:var(--text); margin-top:3px; }
+  .term-pinyin { font-size:0.72rem; color:var(--muted); font-style:italic; margin-top:1px; }
+  .expand-arrow { color:var(--muted); font-size:0.75rem; transition:transform 0.3s; margin-top:4px; }
+  .concept-card.expanded .expand-arrow { transform:rotate(180deg); }
+  .card-body { display:none; margin-top:14px; padding-top:14px; border-top:1px solid rgba(96,165,250,0.12); }
+  .concept-card.expanded .card-body { display:block; }
+  .def-en { font-size:0.83rem; color:rgba(226,234,248,0.8); line-height:1.6; margin-bottom:9px; }
+  .def-cn { font-size:0.83rem; color:rgba(96,165,250,0.85); line-height:1.7; background:rgba(96,165,250,0.05); padding:8px 12px; border-radius:6px; border-left:2px solid var(--mag-blue); }
+  .key-fact { margin-top:9px; font-size:0.76rem; color:var(--mag-gold); font-family:'Space Mono',monospace; }
+
+  /* DIAGRAM BOX */
+  .diagram-box {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; padding:28px; margin-top:18px;
+  }
+  .diagram-title { font-family:'Orbitron',sans-serif; font-size:0.95rem; color:var(--mag-gold); margin-bottom:4px; }
+  .diagram-subtitle { font-size:0.82rem; color:var(--muted); margin-bottom:20px; }
+
+  /* FIELD LINE INTERACTIVE */
+  .field-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .field-tab {
+    background:rgba(8,16,30,0.8); border:1px solid var(--border);
+    color:var(--muted); padding:8px 16px; border-radius:20px;
+    cursor:pointer; font-size:0.8rem; transition:all 0.3s;
+  }
+  .field-tab:hover, .field-tab.active {
+    background:rgba(96,165,250,0.12); border-color:var(--mag-blue);
+    color:var(--mag-blue);
+  }
+  .field-tab .cn { font-size:0.68rem; display:block; opacity:0.65; }
+  .field-diagram { display:none; }
+  .field-diagram.active { display:block; animation:fadeIn 0.3s ease; }
+
+  /* KEY IDEAS */
+  .idea-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; padding:20px 24px; margin-bottom:14px;
+  }
+  .idea-name { font-size:1rem; color:var(--text); margin-bottom:3px; }
+  .idea-name-cn { font-size:0.83rem; color:var(--muted); margin-bottom:14px; }
+  .idea-body { font-size:0.84rem; color:rgba(226,234,248,0.8); line-height:1.7; margin-bottom:10px; }
+  .idea-cn { font-size:0.83rem; color:rgba(96,165,250,0.75); line-height:1.7; background:rgba(96,165,250,0.05); padding:10px 14px; border-radius:6px; border-left:2px solid var(--mag-blue); }
+  .idea-fact { margin-top:10px; font-size:0.78rem; color:var(--mag-gold); font-family:'Space Mono',monospace; }
+
+  /* compare table */
+  .compare-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:0.82rem; }
+  .compare-table th { padding:9px 14px; background:rgba(96,165,250,0.08); color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:1px; border:1px solid rgba(96,165,250,0.15); text-align:left; }
+  .compare-table td { padding:9px 14px; border:1px solid rgba(96,165,250,0.1); vertical-align:top; color:rgba(226,234,248,0.8); line-height:1.5; }
+  .compare-table tr:hover td { background:rgba(96,165,250,0.04); }
+
+  /* GLOSSARY */
+  .search-box {
+    width:100%; padding:11px 20px; background:rgba(8,16,30,0.8);
+    border:1px solid var(--border); border-radius:30px; color:var(--text);
+    font-family:'Noto Sans SC',sans-serif; font-size:0.88rem;
+    outline:none; margin-bottom:18px; transition:border-color 0.3s;
+  }
+  .search-box:focus { border-color:var(--mag-blue); }
+  .search-box::placeholder { color:rgba(226,234,248,0.3); }
+  .glossary-table { width:100%; border-collapse:collapse; }
+  .glossary-table th { font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--mag-blue); text-align:left; padding:11px 14px; border-bottom:1px solid rgba(96,165,250,0.18); letter-spacing:1px; text-transform:uppercase; }
+  .glossary-table td { padding:11px 14px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:top; }
+  .glossary-table tr:hover td { background:rgba(96,165,250,0.04); }
+  .gl-en { font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--mag-gold); }
+  .gl-cn { font-size:0.95rem; color:var(--text); margin:2px 0; }
+  .gl-py { font-size:0.72rem; color:var(--muted); font-style:italic; }
+  .gl-def { font-size:0.8rem; color:rgba(226,234,248,0.7); line-height:1.5; }
+  .gl-def-cn { font-size:0.8rem; color:rgba(96,165,250,0.65); line-height:1.6; }
+
+  /* QUIZ */
+  .quiz-container { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:28px; margin-top:18px; }
+  .quiz-progress { display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; }
+  .progress-bar { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; margin:0 14px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--mag-blue),var(--mag-purple)); border-radius:2px; transition:width 0.5s ease; }
+  .progress-text { font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--muted); }
+  .score-display { font-family:'Orbitron',sans-serif; font-size:0.88rem; color:var(--mag-gold); }
+  .question-box { text-align:center; margin-bottom:22px; }
+  .question-text { font-size:1.1rem; line-height:1.6; color:var(--text); margin-bottom:6px; }
+  .question-cn { font-size:0.88rem; color:rgba(96,165,250,0.6); }
+  .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-bottom:18px; }
+  .option-btn {
+    background:rgba(8,16,30,0.8); border:1px solid rgba(226,234,248,0.13);
+    color:var(--text); padding:13px 14px; border-radius:10px; cursor:pointer;
+    font-family:'Noto Sans SC',sans-serif; font-size:0.83rem; text-align:left;
+    transition:all 0.3s; line-height:1.5;
+  }
+  .option-btn:hover:not(:disabled) { border-color:var(--mag-blue); background:rgba(96,165,250,0.07); }
+  .option-btn.correct { border-color:var(--mag-teal); background:rgba(52,211,153,0.08); color:var(--mag-teal); }
+  .option-btn.wrong { border-color:var(--mag-red); background:rgba(248,113,113,0.08); color:var(--mag-red); }
+  .feedback-box { padding:13px 18px; border-radius:9px; font-size:0.88rem; line-height:1.6; display:none; margin-bottom:13px; }
+  .feedback-box.show { display:block; }
+  .feedback-box.correct { background:rgba(52,211,153,0.08); border:1px solid var(--mag-teal); color:var(--mag-teal); }
+  .feedback-box.wrong { background:rgba(248,113,113,0.08); border:1px solid var(--mag-red); color:var(--mag-red); }
+  .next-btn { display:none; width:100%; padding:13px; background:linear-gradient(135deg,var(--mag-blue),var(--mag-purple)); border:none; border-radius:10px; color:white; font-family:'Orbitron',sans-serif; font-size:0.88rem; cursor:pointer; transition:all 0.3s; }
+  .next-btn.show { display:block; }
+  .next-btn:hover { opacity:0.9; transform:translateY(-1px); box-shadow:0 5px 18px rgba(96,165,250,0.28); }
+  .quiz-result { text-align:center; padding:28px; display:none; }
+  .quiz-result.show { display:block; }
+  .result-score { font-family:'Orbitron',sans-serif; font-size:2.8rem; background:linear-gradient(135deg,var(--mag-gold),var(--mag-purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:10px; }
+  .result-msg { font-size:1.05rem; margin-bottom:4px; }
+  .result-cn { font-size:0.88rem; color:var(--muted); margin-bottom:22px; }
+  .restart-btn { padding:11px 28px; background:transparent; border:1px solid var(--mag-blue); color:var(--mag-blue); border-radius:30px; cursor:pointer; font-family:'Space Mono',monospace; font-size:0.83rem; transition:all 0.3s; }
+  .restart-btn:hover { background:rgba(96,165,250,0.1); }
+
+  .ht-badge { display:inline-block; font-size:0.65rem; font-family:'Space Mono',monospace; padding:2px 7px; border-radius:8px; background:rgba(167,139,250,0.12); border:1px solid rgba(167,139,250,0.3); color:var(--mag-purple); margin-left:6px; vertical-align:middle; }
+
+  @media(max-width:600px){ .options-grid{grid-template-columns:1fr;} .cards-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-badge">GCSE Physics · Year 11 · AQA 4.7 · Higher Tier</div>
+    <h1>MAGNETISM</h1>
+    <div class="subtitle-cn">磁学与电磁学</div>
+    <div class="subtitle-en">Interactive Bilingual Revision Resource · Higher Tier · 互动双语复习资源（高级）</div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab(event,'concepts')">Key Concepts<span class="cn">核心概念</span></button>
+    <button class="tab-btn" onclick="showTab(event,'fields')">Field Lines<span class="cn">磁场线</span></button>
+    <button class="tab-btn" onclick="showTab(event,'keyideas')">Key Ideas<span class="cn">核心要点</span></button>
+    <button class="tab-btn" onclick="showTab(event,'equations')">Equations<span class="cn">公式</span></button>
+    <button class="tab-btn" onclick="showTab(event,'glossary')">Glossary<span class="cn">词汇表</span></button>
+    <button class="tab-btn" onclick="showTab(event,'quiz')">Quiz<span class="cn">测验</span></button>
+  </nav>
+
+  <!-- ══════════ CONCEPTS ══════════ -->
+  <div class="section active" id="section-concepts">
+    <div class="section-title">Key Concepts</div>
+    <div class="section-cn">核心概念 — Click each card to expand · 点击卡片展开详情</div>
+
+    <div style="background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.3); border-radius:10px; padding:11px 18px; margin-bottom:18px; font-size:0.82rem; color:rgba(226,234,248,0.65); line-height:1.6;">
+      🎯 <strong style="color:var(--mag-purple)">AQA Higher Tier 4.7</strong> — Includes all Foundation content <strong style="color:white">plus</strong> the motor effect, Fleming's left-hand rule, electric motors, loudspeakers, the generator effect, and transformers. The equation <strong style="color:white">F = BIl</strong> must be recalled and applied.<br>
+      <span style="font-size:0.78rem; color:rgba(167,139,250,0.6)">包含所有基础内容，以及电动机效应、弗莱明左手定则、电动机、扬声器、发电机效应和变压器。必须记忆并应用公式 F = BIl。</span>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🧲</div>
+          <div class="card-terms">
+            <div class="term-en">Permanent Magnet</div>
+            <div class="term-cn">永久磁铁</div>
+            <div class="term-pinyin">yǒng jiǔ cí tiě</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A material that <strong>produces its own magnetic field</strong> at all times. It does not need an external field to be magnetic. Examples: bar magnets, horseshoe magnets. Made from materials such as iron, steel, cobalt or nickel.</div>
+          <div class="def-cn">始终<strong>产生自身磁场</strong>的材料。不需要外部磁场就具有磁性。例子：条形磁铁、马蹄形磁铁。由铁、钢、钴或镍等材料制成。</div>
+          <div class="key-fact">★ Examples 例子: bar magnet 条形磁铁, horseshoe magnet 马蹄形磁铁</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔩</div>
+          <div class="card-terms">
+            <div class="term-en">Induced Magnet</div>
+            <div class="term-cn">感应磁铁</div>
+            <div class="term-pinyin">gǎn yìng cí tiě</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A magnetic material (e.g. iron) that becomes a magnet <strong>only when placed in a magnetic field</strong>. Induced magnetism <strong>always causes attraction</strong>. When the external field is removed, the material quickly loses most or all of its magnetism.</div>
+          <div class="def-cn">只有当铁磁性材料（如铁）<strong>置于磁场中时才成为磁铁</strong>。感应磁性<strong>总是引起吸引力</strong>。当外部磁场移除时，材料会迅速失去大部分或全部磁性。</div>
+          <div class="key-fact">★ Induced magnetism ALWAYS attracts — never repels 感应磁性只有吸引，没有排斥</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔵🔴</div>
+          <div class="card-terms">
+            <div class="term-en">Magnetic Poles</div>
+            <div class="term-cn">磁极</div>
+            <div class="term-pinyin">cí jí</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">Every magnet has a <strong>north pole</strong> and a <strong>south pole</strong> — the places where the magnetic force is strongest. <strong>Like poles repel</strong> (N–N or S–S). <strong>Unlike poles attract</strong> (N–S). These are non-contact forces.</div>
+          <div class="def-cn">每块磁铁都有<strong>北极</strong>和<strong>南极</strong>——磁力最强的地方。<strong>同性磁极相互排斥</strong>（N-N或S-S）。<strong>异性磁极相互吸引</strong>（N-S）。这些是非接触力。</div>
+          <div class="key-fact">★ Like poles REPEL 同极排斥 · Unlike poles ATTRACT 异极吸引</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🌐</div>
+          <div class="card-terms">
+            <div class="term-en">Magnetic Field</div>
+            <div class="term-cn">磁场</div>
+            <div class="term-pinyin">cí chǎng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The region around a magnet where a force acts on another magnet or magnetic material (iron, steel, cobalt, nickel). Represented by <strong>field lines</strong>. The field is <strong>strongest at the poles</strong> and weakens with distance. Field lines point from <strong>north to south</strong> outside the magnet.</div>
+          <div class="def-cn">磁铁周围对另一块磁铁或磁性材料（铁、钢、钴、镍）施加力的区域。用<strong>磁场线</strong>表示。磁场在<strong>磁极处最强</strong>，随距离增加而减弱。磁场线在磁铁外部从<strong>北极指向南极</strong>。</div>
+          <div class="key-fact">★ Field lines: N pole → S pole outside the magnet 磁场线从北极到南极</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🧭</div>
+          <div class="card-terms">
+            <div class="term-en">Magnetic Compass</div>
+            <div class="term-cn">磁罗盘</div>
+            <div class="term-pinyin">cí luó pán</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">Contains a small bar magnet. The north pole of the needle is attracted towards geographic north because the <strong>Earth's core acts as a large magnet</strong>. The compass needle aligns with the Earth's magnetic field. Compasses can also be used to plot the field lines of a bar magnet.</div>
+          <div class="def-cn">内含一块小条形磁铁。指针的北极被吸引指向地理北方，因为<strong>地球核心像一块大磁铁</strong>。指南针与地球磁场对齐。指南针也可用于绘制条形磁铁的磁场线。</div>
+          <div class="key-fact">★ Earth's core must be magnetic — evidence from compass behaviour 地球核心必定具有磁性</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div class="card-terms">
+            <div class="term-en">Electromagnetism</div>
+            <div class="term-cn">电磁学</div>
+            <div class="term-pinyin">diàn cí xué</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">When an <strong>electric current flows through a wire</strong>, a <strong>magnetic field is produced</strong> around that wire. The field strength depends on: the size of the current and the distance from the wire. The direction of the field depends on the direction of the current.</div>
+          <div class="def-cn">当<strong>电流流过导线</strong>时，导线周围会产生<strong>磁场</strong>。磁场强度取决于：电流大小和距离导线的距离。磁场方向取决于电流方向。</div>
+          <div class="key-fact">★ Bigger current = stronger field 电流越大，磁场越强 · Closer = stronger field 越近，越强</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🌀</div>
+          <div class="card-terms">
+            <div class="term-en">Solenoid</div>
+            <div class="term-cn">螺线管</div>
+            <div class="term-pinyin">luó xiàn guǎn</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A coil of wire carrying a current. Shaping a wire into a solenoid <strong>increases the strength</strong> of the magnetic field. The field <strong>inside is strong and uniform</strong>. The field around a solenoid has a <strong>similar shape to a bar magnet</strong> — with a north and south pole at each end.</div>
+          <div class="def-cn">通有电流的线圈。将导线绕成螺线管可以<strong>增强</strong>磁场强度。内部磁场<strong>强且均匀</strong>。螺线管周围的磁场与<strong>条形磁铁的形状相似</strong>——两端各有一个北极和南极。</div>
+          <div class="key-fact">★ More coils = stronger field 匝数越多，磁场越强</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔌</div>
+          <div class="card-terms">
+            <div class="term-en">Electromagnet</div>
+            <div class="term-cn">电磁铁</div>
+            <div class="term-pinyin">diàn cí tiě</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A <strong>solenoid with an iron core</strong>. Adding the iron core greatly increases the strength of the magnetic field. Can be switched on and off by controlling the current. Used in cranes, electric bells, maglev trains and circuit breakers.</div>
+          <div class="def-cn"><strong>带铁芯的螺线管</strong>。加入铁芯可大大增强磁场强度。可通过控制电流来开关。用于起重机、电铃、磁悬浮列车和断路器。</div>
+          <div class="key-fact">★ Iron core: increases field strength greatly 铁芯大幅增强磁场 · Can be switched on/off 可开关</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🌍</div>
+          <div class="card-terms">
+            <div class="term-en">Earth's Magnetic Field</div>
+            <div class="term-cn">地球磁场</div>
+            <div class="term-pinyin">dì qiú cí chǎng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">The Earth has a magnetic field that extends into space. It behaves <strong>as if there is a large bar magnet</strong> inside the Earth. The compass needle points north because it is attracted to the Earth's magnetic south pole (which is near geographic north). This is evidence the Earth's core must be magnetic.</div>
+          <div class="def-cn">地球有一个延伸到太空的磁场，其行为<strong>就像地球内部有一块大条形磁铁</strong>。指针指向北方是因为它被地球的磁南极（位于地理北极附近）吸引。这证明地球核心必定具有磁性。</div>
+          <div class="key-fact">★ Geographic North = magnetic south pole of Earth 地理北极 = 地球磁南极</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">💪</div>
+          <div class="card-terms">
+            <div class="term-en">The Motor Effect <span class="ht-badge">HT</span></div>
+            <div class="term-cn">电动机效应</div>
+            <div class="term-pinyin">diàn dòng jī xiào yìng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">When a <strong>conductor carrying a current</strong> is placed in a <strong>magnetic field</strong>, the magnet and conductor exert a <strong>force on each other</strong>. This is the motor effect. The force is increased by: increasing the current, increasing the magnetic field strength, or using a longer conductor.</div>
+          <div class="def-cn">当<strong>载流导体</strong>置于<strong>磁场</strong>中时，磁铁和导体之间会产生<strong>相互作用力</strong>。这就是电动机效应。通过增大电流、增强磁场强度或使用更长的导体可以增大力。</div>
+          <div class="key-fact">★ Force size depends on: current (I), field strength (B), length of conductor (l)</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🤚</div>
+          <div class="card-terms">
+            <div class="term-en">Fleming's Left-Hand Rule <span class="ht-badge">HT</span></div>
+            <div class="term-cn">弗莱明左手定则</div>
+            <div class="term-pinyin">fú lái míng zuǒ shǒu dìng zé</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A rule to find the direction of the force on a current-carrying conductor in a magnetic field. Hold the <strong>left hand</strong> with: <strong>First finger</strong> = direction of magnetic Field (N→S), <strong>seCond finger</strong> = direction of Current, <strong>thuMb</strong> = direction of Motion (force). All three at right angles to each other.</div>
+          <div class="def-cn">确定载流导体在磁场中所受力方向的规则。用<strong>左手</strong>：<strong>食指</strong>指向磁场方向（N→S），<strong>中指</strong>指向电流方向，<strong>拇指</strong>指向运动（力）方向。三者互相垂直。</div>
+          <div class="key-fact">★ FBI: Field (finger) → Current (second finger) → Motion/force (thuMb)</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚙️</div>
+          <div class="card-terms">
+            <div class="term-en">Electric Motor <span class="ht-badge">HT</span></div>
+            <div class="term-cn">电动机</div>
+            <div class="term-pinyin">diàn dòng jī</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A coil of wire carrying a current in a magnetic field <strong>tends to rotate</strong>. This is the basis of an electric motor. The two sides of the coil experience forces in <strong>opposite directions</strong> (using Fleming's left-hand rule), causing rotation. Motors convert <strong>electrical energy → kinetic energy</strong>.</div>
+          <div class="def-cn">在磁场中通有电流的线圈<strong>趋于旋转</strong>。这是电动机的基础。线圈的两侧受到<strong>方向相反</strong>的力（用弗莱明左手定则），导致旋转。电动机将<strong>电能转化为动能</strong>。</div>
+          <div class="key-fact">★ Electrical energy → kinetic energy 电能 → 动能</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔈</div>
+          <div class="card-terms">
+            <div class="term-en">Loudspeakers <span class="ht-badge">HT</span></div>
+            <div class="term-cn">扬声器</div>
+            <div class="term-pinyin">yáng shēng qì</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">Loudspeakers and headphones use the <strong>motor effect</strong> to convert <strong>variations in current</strong> in electrical circuits into <strong>pressure variations in sound waves</strong>. An alternating current through a coil in a magnetic field causes the coil (and attached cone) to vibrate back and forth, producing sound.</div>
+          <div class="def-cn">扬声器和耳机利用<strong>电动机效应</strong>将电路中<strong>电流的变化</strong>转换为<strong>声波的压力变化</strong>。通过磁场中线圈的交变电流使线圈（及连接的纸盆）来回振动，产生声音。</div>
+          <div class="key-fact">★ AC current → coil vibrates → cone vibrates → sound waves 交流电→线圈振动→纸盆振动→声波</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div class="card-terms">
+            <div class="term-en">Generator Effect <span class="ht-badge">HT</span></div>
+            <div class="term-cn">发电机效应</div>
+            <div class="term-pinyin">fā diàn jī xiào yìng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">If a conductor <strong>moves relative to a magnetic field</strong>, or if the magnetic field around a conductor <strong>changes</strong>, a <strong>potential difference is induced</strong>. If the conductor is in a complete circuit, a current flows. This is the generator effect (electromagnetic induction). The induced current opposes the change that caused it.</div>
+          <div class="def-cn">如果导体<strong>相对于磁场运动</strong>，或导体周围的磁场<strong>发生变化</strong>，则会产生<strong>感应电动势</strong>。如果导体处于完整电路中，则会产生电流。这就是发电机效应（电磁感应）。感应电流反对引起它的变化。</div>
+          <div class="key-fact">★ Increase induced pd/current: move faster, stronger field, more coil turns 提高感应电动势：加快速度、增强磁场、增加匝数</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔄</div>
+          <div class="card-terms">
+            <div class="term-en">Alternator &amp; Dynamo <span class="ht-badge">HT</span></div>
+            <div class="term-cn">交流发电机与直流发电机</div>
+            <div class="term-pinyin">jiāo liú fā diàn jī yǔ zhí liú fā diàn jī</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">Both use the <strong>generator effect</strong>. An <strong>alternator</strong> uses slip rings to produce <strong>alternating current (AC)</strong> — the output reverses direction continuously. A <strong>dynamo</strong> uses a split-ring commutator to produce <strong>direct current (DC)</strong> — the output always flows in one direction.</div>
+          <div class="def-cn">两者都使用<strong>发电机效应</strong>。<strong>交流发电机</strong>使用滑环产生<strong>交流电（AC）</strong>——输出持续反向。<strong>直流发电机</strong>使用分裂环换向器产生<strong>直流电（DC）</strong>——输出始终单向流动。</div>
+          <div class="key-fact">★ Alternator → AC (slip rings) · Dynamo → DC (split-ring commutator)</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🎤</div>
+          <div class="card-terms">
+            <div class="term-en">Microphone <span class="ht-badge">HT</span></div>
+            <div class="term-cn">麦克风</div>
+            <div class="term-pinyin">mài kè fēng</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A microphone uses the <strong>generator effect</strong> to convert <strong>pressure variations in sound waves</strong> into <strong>variations in current</strong> in electrical circuits. Sound waves make a diaphragm vibrate, which moves a coil in a magnetic field, inducing a varying current. This is the <strong>reverse</strong> of a loudspeaker.</div>
+          <div class="def-cn">麦克风利用<strong>发电机效应</strong>将<strong>声波的压力变化</strong>转换为电路中的<strong>电流变化</strong>。声波使振膜振动，振膜带动磁场中的线圈运动，从而感应出变化的电流。这与扬声器的工作原理<strong>相反</strong>。</div>
+          <div class="key-fact">★ Microphone is the REVERSE of a loudspeaker 麦克风与扬声器工作原理相反</div>
+        </div>
+      </div>
+
+      <div class="concept-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <div class="card-icon">🔁</div>
+          <div class="card-terms">
+            <div class="term-en">Transformer <span class="ht-badge">HT</span></div>
+            <div class="term-cn">变压器</div>
+            <div class="term-pinyin">biàn yā qì</div>
+          </div>
+          <div class="expand-arrow">▼</div>
+        </div>
+        <div class="card-body">
+          <div class="def-en">A device with a <strong>primary coil</strong> and <strong>secondary coil</strong> wound on an <strong>iron core</strong>. An alternating current in the primary coil creates a changing magnetic field in the iron core, which induces a voltage in the secondary coil. A <strong>step-up transformer</strong> increases voltage (more secondary turns). A <strong>step-down transformer</strong> decreases voltage (fewer secondary turns).</div>
+          <div class="def-cn">由<strong>初级线圈</strong>和<strong>次级线圈</strong>绕在<strong>铁芯</strong>上构成的装置。初级线圈中的交变电流在铁芯中产生变化的磁场，从而在次级线圈中感应出电压。<strong>升压变压器</strong>提高电压（次级匝数更多）。<strong>降压变压器</strong>降低电压（次级匝数更少）。</div>
+          <div class="key-fact">★ Step-up: Vs &gt; Vp (more secondary turns) · Step-down: Vs &lt; Vp (fewer secondary turns)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ FIELD LINES ══════════ -->
+  <div class="section" id="section-fields">
+    <div class="section-title">Magnetic Field Diagrams</div>
+    <div class="section-cn">磁场线图 — Click a tab to switch diagram · 点击标签切换图表</div>
+
+    <div class="diagram-box">
+      <div class="field-tabs">
+        <div class="field-tab active" onclick="showField(event,'bar')">Bar Magnet<span class="cn">条形磁铁</span></div>
+        <div class="field-tab" onclick="showField(event,'attract')">Attracting Poles<span class="cn">异极相吸</span></div>
+        <div class="field-tab" onclick="showField(event,'repel')">Repelling Poles<span class="cn">同极相斥</span></div>
+        <div class="field-tab" onclick="showField(event,'wire')">Current in Wire<span class="cn">导线中的电流</span></div>
+        <div class="field-tab" onclick="showField(event,'solenoid')">Solenoid<span class="cn">螺线管</span></div>
+        <div class="field-tab" onclick="showField(event,'fleming')">Fleming's Rule <span style="font-size:0.6rem; color:var(--mag-purple);">HT</span><span class="cn">弗莱明定则</span></div>
+        <div class="field-tab" onclick="showField(event,'motor')">Electric Motor <span style="font-size:0.6rem; color:var(--mag-purple);">HT</span><span class="cn">电动机</span></div>
+        <div class="field-tab" onclick="showField(event,'transformer')">Transformer <span style="font-size:0.6rem; color:var(--mag-purple);">HT</span><span class="cn">变压器</span></div>
+      </div>
+
+      <!-- BAR MAGNET -->
+      <div class="field-diagram active" id="field-bar">
+        <div class="diagram-title">Bar Magnet Field — 条形磁铁磁场</div>
+        <div class="diagram-subtitle">Field lines go from North pole to South pole outside the magnet · 磁场线在磁铁外部从北极到南极</div>
+        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Magnet body -->
+          <rect x="200" y="120" width="100" height="40" rx="4" fill="#1e3a5f" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+          <rect x="200" y="120" width="50" height="40" rx="4" fill="#7f1d1d"/>
+          <text x="225" y="146" fill="#fca5a5" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <rect x="250" y="120" width="50" height="40" rx="4" fill="#1e3a8a"/>
+          <text x="275" y="146" fill="#93c5fd" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+
+          <!-- Field lines - arcs from N to S going over the top -->
+          <path d="M225,120 C225,70 275,70 275,120" fill="none" stroke="rgba(96,165,250,0.7)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,120 C225,40 275,40 275,120" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,120 C180,20 320,20 275,120" fill="none" stroke="rgba(96,165,250,0.5)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,120 C140,5 360,5 275,120" fill="none" stroke="rgba(96,165,250,0.35)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+          <!-- Field lines going below -->
+          <path d="M225,160 C225,210 275,210 275,160" fill="none" stroke="rgba(96,165,250,0.7)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,160 C225,240 275,240 275,160" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,160 C180,260 320,260 275,160" fill="none" stroke="rgba(96,165,250,0.5)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M225,160 C140,275 360,275 275,160" fill="none" stroke="rgba(96,165,250,0.35)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+          <!-- Labels -->
+          <text x="130" y="140" fill="rgba(226,234,248,0.5)" font-size="11" font-family="Space Mono" text-anchor="middle">closer lines =</text>
+          <text x="130" y="154" fill="rgba(226,234,248,0.5)" font-size="11" font-family="Space Mono" text-anchor="middle">stronger field</text>
+          <text x="130" y="168" fill="rgba(96,165,250,0.5)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">线密 = 场强</text>
+
+          <text x="480" y="100" fill="rgba(226,234,248,0.5)" font-size="11" font-family="Space Mono" text-anchor="middle">direction:</text>
+          <text x="480" y="114" fill="rgba(226,234,248,0.5)" font-size="11" font-family="Space Mono" text-anchor="middle">N pole → S pole</text>
+          <text x="480" y="128" fill="rgba(96,165,250,0.5)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">北极 → 南极</text>
+
+          <defs>
+            <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="rgba(96,165,250,0.8)"/>
+            </marker>
+            <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="rgba(248,113,113,0.8)"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- ATTRACTING POLES -->
+      <div class="field-diagram" id="field-attract">
+        <div class="diagram-title">Unlike Poles Attracting — 异极相吸</div>
+        <div class="diagram-subtitle">Field lines connect the two magnets — N → S · 磁场线连接两块磁铁——北极到南极</div>
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Left magnet: N on right -->
+          <rect x="80" y="90" width="120" height="40" rx="4" fill="#1e3a5f" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+          <rect x="80" y="90" width="60" height="40" fill="#1e3a8a" rx="4"/>
+          <text x="110" y="116" fill="#93c5fd" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <rect x="140" y="90" width="60" height="40" fill="#7f1d1d" rx="4"/>
+          <text x="170" y="116" fill="#fca5a5" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <!-- Right magnet: S on left -->
+          <rect x="400" y="90" width="120" height="40" rx="4" fill="#1e3a5f" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+          <rect x="400" y="90" width="60" height="40" fill="#7f1d1d" rx="4"/>
+          <text x="430" y="116" fill="#fca5a5" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <rect x="460" y="90" width="60" height="40" fill="#1e3a8a" rx="4"/>
+          <text x="490" y="116" fill="#93c5fd" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <!-- Field lines between magnets -->
+          <path d="M200,110 C270,110 330,110 400,110" fill="none" stroke="rgba(96,165,250,0.8)" stroke-width="2" marker-end="url(#arrowBlue)"/>
+          <path d="M200,110 C270,80 330,80 400,110" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M200,110 C270,140 330,140 400,110" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M200,110 C270,55 330,55 400,110" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M200,110 C270,165 330,165 400,110" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <!-- Arrow showing attraction -->
+          <text x="300" y="200" fill="var(--mag-teal)" font-size="12" font-family="Space Mono" text-anchor="middle">ATTRACT 吸引</text>
+          <text x="240" y="195" fill="var(--mag-teal)" font-size="14" text-anchor="middle">←</text>
+          <text x="360" y="195" fill="var(--mag-teal)" font-size="14" text-anchor="middle">→</text>
+        </svg>
+      </div>
+
+      <!-- REPELLING POLES -->
+      <div class="field-diagram" id="field-repel">
+        <div class="diagram-title">Like Poles Repelling — 同极相斥</div>
+        <div class="diagram-subtitle">Field lines push away from each other — a neutral point exists between them · 磁场线相互排斥——两极之间存在中性点</div>
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Left magnet: N on right -->
+          <rect x="80" y="90" width="120" height="40" rx="4" fill="#1e3a5f" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+          <rect x="80" y="90" width="60" height="40" fill="#1e3a8a" rx="4"/>
+          <text x="110" y="116" fill="#93c5fd" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <rect x="140" y="90" width="60" height="40" fill="#7f1d1d" rx="4"/>
+          <text x="170" y="116" fill="#fca5a5" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <!-- Right magnet: N on left -->
+          <rect x="400" y="90" width="120" height="40" rx="4" fill="#1e3a5f" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"/>
+          <rect x="400" y="90" width="60" height="40" fill="#7f1d1d" rx="4"/>
+          <text x="430" y="116" fill="#fca5a5" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <rect x="460" y="90" width="60" height="40" fill="#1e3a8a" rx="4"/>
+          <text x="490" y="116" fill="#93c5fd" font-size="16" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <!-- Repelling field lines -->
+          <path d="M200,105 C240,70 260,60 300,60" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <path d="M400,105 C360,70 340,60 300,60" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <path d="M200,115 C240,150 260,160 300,160" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <path d="M400,115 C360,150 340,160 300,160" fill="none" stroke="rgba(248,113,113,0.7)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <path d="M200,110 C230,110 265,110 290,110" fill="none" stroke="rgba(248,113,113,0.8)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <path d="M400,110 C370,110 335,110 310,110" fill="none" stroke="rgba(248,113,113,0.8)" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+          <!-- Neutral point -->
+          <circle cx="300" cy="110" r="6" fill="none" stroke="var(--mag-gold)" stroke-width="2"/>
+          <text x="300" y="190" fill="var(--mag-gold)" font-size="10" font-family="Space Mono" text-anchor="middle">neutral point 中性点</text>
+          <!-- Arrows showing repulsion -->
+          <text x="300" y="210" fill="var(--mag-red)" font-size="12" font-family="Space Mono" text-anchor="middle">REPEL 排斥</text>
+          <text x="230" y="205" fill="var(--mag-red)" font-size="14" text-anchor="middle">←</text>
+          <text x="370" y="205" fill="var(--mag-red)" font-size="14" text-anchor="middle">→</text>
+        </svg>
+      </div>
+
+      <!-- WIRE -->
+      <div class="field-diagram" id="field-wire">
+        <div class="diagram-title">Magnetic Field Around a Current-Carrying Wire — 载流导线周围的磁场</div>
+        <div class="diagram-subtitle">Circular field lines around the wire — use the right-hand grip rule to find direction · 导线周围的圆形磁场线</div>
+        <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Wire (cross-section dot = current coming out) -->
+          <circle cx="300" cy="130" r="14" fill="#1e3a5f" stroke="rgba(96,165,250,0.8)" stroke-width="2"/>
+          <circle cx="300" cy="130" r="4" fill="rgba(96,165,250,0.9)"/>
+          <text x="300" y="174" fill="rgba(226,234,248,0.7)" font-size="11" font-family="Space Mono" text-anchor="middle">• = current towards you</text>
+          <text x="300" y="188" fill="rgba(96,165,250,0.55)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">点表示电流朝向你</text>
+          <!-- Circular field lines -->
+          <circle cx="300" cy="130" r="35" fill="none" stroke="rgba(96,165,250,0.65)" stroke-width="1.5" stroke-dasharray="none"/>
+          <circle cx="300" cy="130" r="60" fill="none" stroke="rgba(96,165,250,0.45)" stroke-width="1.5"/>
+          <circle cx="300" cy="130" r="88" fill="none" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
+          <!-- Arrows on circles (anti-clockwise for current towards viewer) -->
+          <path d="M335,130 C335,111 317,95 300,95" fill="none" stroke="rgba(96,165,250,0.8)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M360,130 C360,103 336,80 300,80" fill="none" stroke="rgba(96,165,250,0.6)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <!-- Labels -->
+          <text x="430" y="80" fill="rgba(226,234,248,0.6)" font-size="11" font-family="Space Mono" text-anchor="middle">weaker field</text>
+          <text x="430" y="94" fill="rgba(226,234,248,0.6)" font-size="11" font-family="Space Mono" text-anchor="middle">(further away)</text>
+          <text x="430" y="108" fill="rgba(96,165,250,0.45)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">越远磁场越弱</text>
+          <text x="430" y="140" fill="rgba(226,234,248,0.6)" font-size="11" font-family="Space Mono" text-anchor="middle">stronger field</text>
+          <text x="430" y="154" fill="rgba(226,234,248,0.6)" font-size="11" font-family="Space Mono" text-anchor="middle">(closer to wire)</text>
+          <text x="430" y="168" fill="rgba(96,165,250,0.45)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">越近磁场越强</text>
+        </svg>
+      </div>
+
+      <!-- SOLENOID -->
+      <div class="field-diagram" id="field-solenoid">
+        <div class="diagram-title">Solenoid / Electromagnet Field — 螺线管/电磁铁磁场</div>
+        <div class="diagram-subtitle">The field inside is strong and uniform — the shape is like a bar magnet · 内部磁场强且均匀，形状像条形磁铁</div>
+        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Solenoid coil body -->
+          <rect x="150" y="90" width="300" height="60" rx="6" fill="rgba(30,58,95,0.4)" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
+          <!-- Coil loops (simplified) -->
+          <g stroke="rgba(96,165,250,0.6)" stroke-width="2" fill="none">
+            <ellipse cx="180" cy="120" rx="12" ry="30"/>
+            <ellipse cx="220" cy="120" rx="12" ry="30"/>
+            <ellipse cx="260" cy="120" rx="12" ry="30"/>
+            <ellipse cx="300" cy="120" rx="12" ry="30"/>
+            <ellipse cx="340" cy="120" rx="12" ry="30"/>
+            <ellipse cx="380" cy="120" rx="12" ry="30"/>
+            <ellipse cx="420" cy="120" rx="12" ry="30"/>
+          </g>
+          <!-- Iron core -->
+          <rect x="155" y="108" width="290" height="24" rx="3" fill="rgba(100,80,50,0.3)" stroke="rgba(180,130,80,0.4)" stroke-width="1"/>
+          <text x="300" y="124" fill="rgba(180,130,80,0.7)" font-size="10" font-family="Space Mono" text-anchor="middle">iron core 铁芯</text>
+          <!-- N and S labels -->
+          <text x="150" y="126" fill="#fca5a5" font-size="18" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <text x="450" y="126" fill="#93c5fd" font-size="18" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <!-- External field lines like bar magnet -->
+          <path d="M150,115 C100,60 500,60 450,115" fill="none" stroke="rgba(96,165,250,0.55)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M150,120 C80,30 520,30 450,120" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M150,125 C100,180 500,180 450,125" fill="none" stroke="rgba(96,165,250,0.55)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <path d="M150,130 C80,210 520,210 450,130" fill="none" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <!-- Internal uniform field -->
+          <line x1="170" y1="118" x2="430" y2="118" stroke="rgba(96,165,250,0.7)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <line x1="170" y1="123" x2="430" y2="123" stroke="rgba(96,165,250,0.7)" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+          <text x="300" y="30" fill="rgba(226,234,248,0.5)" font-size="11" font-family="Space Mono" text-anchor="middle">field lines like a bar magnet outside 外部磁场线类似条形磁铁</text>
+        </svg>
+      </div>
+
+      <!-- FLEMING'S LEFT-HAND RULE -->
+      <div class="field-diagram" id="field-fleming">
+        <div class="diagram-title">Fleming's Left-Hand Rule — 弗莱明左手定则</div>
+        <div class="diagram-subtitle">Use your LEFT hand — each finger represents a different direction · 用左手——每个手指代表不同方向</div>
+        <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Hand outline (simplified schematic) -->
+          <!-- Thumb pointing up (Motion/Force) -->
+          <rect x="230" y="60" width="28" height="80" rx="14" fill="rgba(251,191,36,0.25)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="244" y="50" fill="#fbbf24" font-size="11" font-family="Space Mono" text-anchor="middle">thuMb</text>
+          <text x="244" y="40" fill="#fbbf24" font-size="12" font-family="Space Mono" text-anchor="middle">↑</text>
+          <!-- First finger pointing right (Field) -->
+          <rect x="270" y="100" width="110" height="24" rx="12" fill="rgba(96,165,250,0.25)" stroke="#60a5fa" stroke-width="2"/>
+          <text x="395" y="116" fill="#60a5fa" font-size="11" font-family="Space Mono">→ Field (N→S)</text>
+          <!-- Second/middle finger pointing toward viewer (Current) -->
+          <rect x="258" y="130" width="24" height="90" rx="12" fill="rgba(167,139,250,0.25)" stroke="#a78bfa" stroke-width="2"/>
+          <circle cx="270" cy="230" r="10" fill="rgba(167,139,250,0.3)" stroke="#a78bfa" stroke-width="2"/>
+          <circle cx="270" cy="230" r="4" fill="#a78bfa"/>
+          <!-- Palm -->
+          <rect x="228" y="130" width="60" height="70" rx="8" fill="rgba(30,58,95,0.5)" stroke="rgba(96,165,250,0.3)" stroke-width="1.5"/>
+          <!-- Labels box -->
+          <rect x="30" y="60" width="170" height="160" rx="8" fill="rgba(8,16,30,0.7)" stroke="rgba(96,165,250,0.2)" stroke-width="1"/>
+          <text x="115" y="82" fill="rgba(226,234,248,0.7)" font-size="11" font-family="Space Mono" text-anchor="middle">LEFT HAND 左手</text>
+          <line x1="40" y1="95" x2="195" y2="95" stroke="rgba(96,165,250,0.15)" stroke-width="1"/>
+          <rect x="40" y="102" width="12" height="12" rx="2" fill="rgba(251,191,36,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="60" y="113" fill="#fbbf24" font-size="11" font-family="Space Mono">thuMb</text>
+          <text x="60" y="127" fill="rgba(251,191,36,0.7)" font-size="10" font-family="Noto Sans SC">= Motion (force) 力</text>
+          <rect x="40" y="138" width="12" height="12" rx="2" fill="rgba(96,165,250,0.3)" stroke="#60a5fa" stroke-width="1.5"/>
+          <text x="60" y="149" fill="#60a5fa" font-size="11" font-family="Space Mono">First finger</text>
+          <text x="60" y="163" fill="rgba(96,165,250,0.7)" font-size="10" font-family="Noto Sans SC">= Field 磁场 (N→S)</text>
+          <rect x="40" y="174" width="12" height="12" rx="2" fill="rgba(167,139,250,0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+          <text x="60" y="185" fill="#a78bfa" font-size="11" font-family="Space Mono">seCond finger</text>
+          <text x="60" y="199" fill="rgba(167,139,250,0.7)" font-size="10" font-family="Noto Sans SC">= Current 电流</text>
+          <!-- F = BIl reminder -->
+          <text x="480" y="140" fill="var(--mag-gold)" font-size="14" font-family="Space Mono" text-anchor="middle">F = BIl</text>
+          <text x="480" y="158" fill="rgba(251,191,36,0.6)" font-size="10" font-family="Space Mono" text-anchor="middle">force equation</text>
+          <text x="480" y="172" fill="rgba(251,191,36,0.5)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">力的公式</text>
+          <text x="480" y="200" fill="rgba(226,234,248,0.5)" font-size="10" font-family="Space Mono" text-anchor="middle">All 3 directions</text>
+          <text x="480" y="214" fill="rgba(226,234,248,0.5)" font-size="10" font-family="Space Mono" text-anchor="middle">at 90° to each</text>
+          <text x="480" y="228" fill="rgba(226,234,248,0.5)" font-size="10" font-family="Space Mono" text-anchor="middle">other 互相垂直</text>
+        </svg>
+      </div>
+
+      <!-- ELECTRIC MOTOR -->
+      <div class="field-diagram" id="field-motor">
+        <div class="diagram-title">Electric Motor (Coil in a Magnetic Field) — 电动机（磁场中的线圈）</div>
+        <div class="diagram-subtitle">Current in each side of the coil experiences opposite forces → rotation · 线圈两侧电流受到方向相反的力→旋转</div>
+        <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Magnets -->
+          <rect x="60" y="80" width="50" height="100" rx="6" fill="#7f1d1d" stroke="rgba(248,113,113,0.5)" stroke-width="1.5"/>
+          <text x="85" y="136" fill="#fca5a5" font-size="18" font-weight="bold" text-anchor="middle" font-family="Space Mono">N</text>
+          <rect x="490" y="80" width="50" height="100" rx="6" fill="#1e3a8a" stroke="rgba(147,197,253,0.5)" stroke-width="1.5"/>
+          <text x="515" y="136" fill="#93c5fd" font-size="18" font-weight="bold" text-anchor="middle" font-family="Space Mono">S</text>
+          <!-- Coil (rectangle, viewed from side) -->
+          <rect x="240" y="90" width="120" height="80" rx="4" fill="rgba(167,139,250,0.15)" stroke="#a78bfa" stroke-width="2.5"/>
+          <!-- Axle -->
+          <line x1="300" y1="50" x2="300" y2="90" stroke="rgba(226,234,248,0.5)" stroke-width="3"/>
+          <line x1="300" y1="170" x2="300" y2="210" stroke="rgba(226,234,248,0.5)" stroke-width="3"/>
+          <circle cx="300" cy="130" r="6" fill="var(--mag-gold)" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
+          <!-- Force arrows -->
+          <line x1="240" y1="110" x2="180" y2="110" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+          <text x="205" y="105" fill="#34d399" font-size="11" font-family="Space Mono" text-anchor="middle">F</text>
+          <text x="205" y="124" fill="rgba(52,211,153,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">力</text>
+          <line x1="360" y1="150" x2="420" y2="150" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+          <text x="395" y="145" fill="#34d399" font-size="11" font-family="Space Mono" text-anchor="middle">F</text>
+          <text x="395" y="164" fill="rgba(52,211,153,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">力</text>
+          <!-- Rotation arrow -->
+          <path d="M300,55 C330,55 350,70 350,90" fill="none" stroke="var(--mag-gold)" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowGold2)"/>
+          <text x="360" y="68" fill="var(--mag-gold)" font-size="11" font-family="Space Mono">rotation</text>
+          <text x="360" y="82" fill="rgba(251,191,36,0.6)" font-size="10" font-family="Noto Sans SC">旋转</text>
+          <!-- Current direction labels -->
+          <text x="300" y="108" fill="#a78bfa" font-size="10" font-family="Space Mono" text-anchor="middle">current →</text>
+          <text x="300" y="158" fill="#a78bfa" font-size="10" font-family="Space Mono" text-anchor="middle">← current</text>
+          <!-- Field arrows -->
+          <line x1="115" y1="130" x2="488" y2="130" stroke="rgba(96,165,250,0.25)" stroke-width="1.5" stroke-dasharray="8,4" marker-end="url(#arrowBlue)"/>
+          <text x="300" y="220" fill="rgba(96,165,250,0.5)" font-size="10" font-family="Space Mono" text-anchor="middle">magnetic field direction N→S 磁场方向</text>
+          <defs>
+            <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34d399"/></marker>
+            <marker id="arrowGold2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#fbbf24"/></marker>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- TRANSFORMER -->
+      <div class="field-diagram" id="field-transformer">
+        <div class="diagram-title">Transformer — 变压器</div>
+        <div class="diagram-subtitle">Primary and secondary coils on a shared iron core · 共用铁芯上的初级和次级线圈</div>
+        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;height:auto;display:block;margin:0 auto;">
+          <!-- Iron core (rectangle frame) -->
+          <rect x="160" y="60" width="280" height="120" rx="6" fill="none" stroke="rgba(180,130,80,0.5)" stroke-width="14"/>
+          <text x="300" y="128" fill="rgba(180,130,80,0.6)" font-size="11" font-family="Space Mono" text-anchor="middle">iron core 铁芯</text>
+          <!-- Primary coil loops (left side) -->
+          <g stroke="#60a5fa" stroke-width="2.5" fill="none">
+            <ellipse cx="160" cy="85" rx="18" ry="10"/>
+            <ellipse cx="160" cy="100" rx="18" ry="10"/>
+            <ellipse cx="160" cy="115" rx="18" ry="10"/>
+            <ellipse cx="160" cy="130" rx="18" ry="10"/>
+            <ellipse cx="160" cy="145" rx="18" ry="10"/>
+          </g>
+          <!-- Secondary coil loops (right side) -->
+          <g stroke="#a78bfa" stroke-width="2.5" fill="none">
+            <ellipse cx="440" cy="90" rx="18" ry="10"/>
+            <ellipse cx="440" cy="108" rx="18" ry="10"/>
+            <ellipse cx="440" cy="126" rx="18" ry="10"/>
+            <ellipse cx="440" cy="144" rx="18" ry="10"/>
+            <ellipse cx="440" cy="162" rx="18" ry="10"/>
+            <ellipse cx="440" cy="180" rx="18" ry="10"/>
+            <ellipse cx="440" cy="198" rx="18" ry="10"/>
+            <ellipse cx="440" cy="216" rx="18" ry="10"/>
+          </g>
+          <!-- Input/Output lines -->
+          <line x1="60" y1="100" x2="142" y2="100" stroke="#60a5fa" stroke-width="2"/>
+          <line x1="60" y1="155" x2="142" y2="155" stroke="#60a5fa" stroke-width="2"/>
+          <line x1="458" y1="100" x2="550" y2="100" stroke="#a78bfa" stroke-width="2"/>
+          <line x1="458" y1="185" x2="550" y2="185" stroke="#a78bfa" stroke-width="2"/>
+          <!-- Labels -->
+          <text x="100" y="80" fill="#60a5fa" font-size="12" font-family="Space Mono" text-anchor="middle">PRIMARY</text>
+          <text x="100" y="94" fill="rgba(96,165,250,0.65)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">初级线圈</text>
+          <text x="100" y="170" fill="#60a5fa" font-size="11" font-family="Space Mono" text-anchor="middle">Vp, np</text>
+          <text x="500" y="80" fill="#a78bfa" font-size="12" font-family="Space Mono" text-anchor="middle">SECONDARY</text>
+          <text x="500" y="94" fill="rgba(167,139,250,0.65)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">次级线圈</text>
+          <text x="500" y="200" fill="#a78bfa" font-size="11" font-family="Space Mono" text-anchor="middle">Vs, ns</text>
+          <!-- Equation reminder -->
+          <text x="300" y="212" fill="var(--mag-gold)" font-size="12" font-family="Space Mono" text-anchor="middle">Vp/Vs = np/ns</text>
+          <!-- AC symbol on primary -->
+          <text x="60" y="130" fill="#60a5fa" font-size="18" text-anchor="middle">~</text>
+          <text x="60" y="145" fill="rgba(96,165,250,0.5)" font-size="9" font-family="Space Mono" text-anchor="middle">AC in</text>
+        </svg>
+      </div>
+
+      <!-- Info box below diagram -->
+      <div id="fieldInfoBox" style="margin-top:20px; padding:16px 20px; background:rgba(96,165,250,0.06); border:1px solid rgba(96,165,250,0.2); border-radius:10px;">
+        <div id="fieldInfoContent">
+          <div style="font-family:'Space Mono',monospace; color:var(--mag-gold); font-size:0.82rem; margin-bottom:5px;">Bar Magnet 条形磁铁</div>
+          <div style="font-size:0.84rem; color:rgba(226,234,248,0.8); line-height:1.6; margin-bottom:8px;">Field lines come out of the North pole, curve around and enter the South pole. Lines are closer together near the poles — showing a stronger field there.</div>
+          <div style="font-size:0.83rem; color:rgba(96,165,250,0.75); line-height:1.7;">磁场线从北极出发，弯曲后进入南极。磁极附近的磁场线更密集——表明那里的磁场更强。磁场线的方向是从北极到南极。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ KEY IDEAS ══════════ -->
+  <div class="section" id="section-keyideas">
+    <div class="section-title">Key Ideas to Describe</div>
+    <div class="section-cn">核心要点 — AQA Foundation: no equations. Describe these ideas clearly. 无需公式，清晰描述以下概念。</div>
+
+    <div class="idea-card">
+      <div class="idea-name">🧲 Permanent vs Induced Magnets — 永久磁铁与感应磁铁</div>
+      <div class="idea-name-cn">AQA 4.7.1.1 — The key differences you must be able to describe</div>
+      <table class="compare-table">
+        <tr>
+          <th></th>
+          <th>Permanent Magnet 永久磁铁</th>
+          <th>Induced Magnet 感应磁铁</th>
+        </tr>
+        <tr>
+          <td style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.75rem;">Field?<br>磁场?</td>
+          <td>Produces its own magnetic field at all times 始终产生自身磁场</td>
+          <td>Only magnetic when inside another magnetic field 只有在磁场中才有磁性</td>
+        </tr>
+        <tr>
+          <td style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.75rem;">Force?<br>力?</td>
+          <td>Can attract OR repel another magnet 可以吸引或排斥另一块磁铁</td>
+          <td>ALWAYS attracts — never repels 总是吸引，不会排斥</td>
+        </tr>
+        <tr>
+          <td style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.75rem;">Remove field?<br>移除磁场?</td>
+          <td>Stays magnetic 保持磁性</td>
+          <td>Loses magnetism quickly 迅速失去磁性</td>
+        </tr>
+        <tr>
+          <td style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.75rem;">Example<br>例子</td>
+          <td>Bar magnet, horseshoe magnet 条形磁铁，马蹄形磁铁</td>
+          <td>Iron nail near a magnet 磁铁附近的铁钉</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="idea-card">
+      <div class="idea-name">🌐 Magnetic Field Lines — 磁场线</div>
+      <div class="idea-name-cn">AQA 4.7.1.2 — What you need to know about field lines</div>
+      <div class="idea-body">
+        You must be able to draw and describe the magnetic field pattern of a bar magnet. Key points:<br><br>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="background:rgba(96,165,250,0.07); border-left:3px solid var(--mag-blue); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-blue)">Direction</strong> — field lines go from the <strong>North pole to the South pole</strong> outside the magnet.<br>
+            <span style="font-size:0.78rem; color:rgba(96,165,250,0.65)">方向——磁场线在磁铁外部从北极到南极。</span>
+          </div>
+          <div style="background:rgba(96,165,250,0.07); border-left:3px solid var(--mag-blue); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-blue)">Strength</strong> — the <strong>closer together the lines are, the stronger the field</strong>. The field is strongest at the poles.
+            <br><span style="font-size:0.78rem; color:rgba(96,165,250,0.65)">强度——磁场线越密集，磁场越强。磁场在磁极处最强。</span>
+          </div>
+          <div style="background:rgba(96,165,250,0.07); border-left:3px solid var(--mag-blue); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-blue)">Plotting</strong> — a <strong>compass</strong> can be used to plot field lines. The north end of the compass needle points in the direction of the field at that point.
+            <br><span style="font-size:0.78rem; color:rgba(96,165,250,0.65)">绘制——可以用指南针绘制磁场线。指南针北端指向该点的磁场方向。</span>
+          </div>
+          <div style="background:rgba(96,165,250,0.07); border-left:3px solid var(--mag-blue); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-blue)">Never cross</strong> — magnetic field lines <strong>never cross each other</strong>.
+            <br><span style="font-size:0.78rem; color:rgba(96,165,250,0.65)">不相交——磁场线永远不会相互交叉。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card">
+      <div class="idea-name">⚡ Electromagnetism — 电磁学</div>
+      <div class="idea-name-cn">AQA 4.7.2.1 — Current, fields and solenoids</div>
+      <div class="idea-body">
+        Three things to be able to describe clearly:
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+          <div style="background:rgba(167,139,250,0.07); border-left:3px solid var(--mag-purple); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-purple)">1. Current creates a field</strong> — a wire carrying a current produces a <strong>circular magnetic field</strong> around it. The greater the current, the stronger the field. The field is strongest close to the wire.<br>
+            <span style="font-size:0.78rem; color:rgba(167,139,250,0.65)">导线中的电流产生圆形磁场。电流越大，磁场越强。靠近导线处磁场最强。</span>
+          </div>
+          <div style="background:rgba(167,139,250,0.07); border-left:3px solid var(--mag-purple); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-purple)">2. Solenoid</strong> — wrapping wire into a coil (solenoid) makes the field stronger and more uniform inside. The field outside looks like a bar magnet.<br>
+            <span style="font-size:0.78rem; color:rgba(167,139,250,0.65)">将导线绕成线圈（螺线管）使内部磁场更强且更均匀。外部磁场看起来像条形磁铁。</span>
+          </div>
+          <div style="background:rgba(167,139,250,0.07); border-left:3px solid var(--mag-purple); padding:9px 13px; border-radius:0 6px 6px 0;">
+            <strong style="color:var(--mag-purple)">3. Electromagnet</strong> — adding an <strong>iron core</strong> to a solenoid massively increases the field strength. It can be switched on and off. More coils of wire = stronger field. More current = stronger field.<br>
+            <span style="font-size:0.78rem; color:rgba(167,139,250,0.65)">在螺线管中加入铁芯可大幅增强磁场强度。可以开关。线圈匝数越多或电流越大 = 磁场越强。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card">
+      <div class="idea-name">🌍 Earth's Magnetic Field — 地球磁场</div>
+      <div class="idea-name-cn">AQA 4.7.1.2 — Evidence from compass behaviour</div>
+      <div class="idea-body">The Earth has a magnetic field that surrounds the whole planet. A compass needle points north because the Earth's core acts as a large magnet. This behaviour of compasses is <strong>evidence that the core of the Earth must be magnetic</strong>.</div>
+      <div class="idea-cn">地球有一个包围整个星球的磁场。指南针指北是因为地球核心像一块大磁铁。指南针的这种行为是<strong>地球核心必定具有磁性的证据</strong>。</div>
+      <div style="margin-top:12px; background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.22); border-radius:8px; padding:11px 14px;">
+        <div style="color:var(--mag-gold); font-family:'Space Mono',monospace; font-size:0.72rem; margin-bottom:6px;">EXAM TIP 考试提示</div>
+        <div style="font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.6;">The geographic North Pole is actually near the Earth's magnetic <strong>south</strong> pole — that is why the <strong>north</strong> end of a compass needle points that way (opposite poles attract).<br>
+        <span style="font-size:0.78rem; color:rgba(251,191,36,0.65)">地理北极实际上靠近地球的磁南极——这就是指南针北端指向那个方向的原因（异极相吸）。</span></div>
+      </div>
+    </div>
+
+    <div class="idea-card" style="border-color:rgba(167,139,250,0.35);">
+      <div class="idea-name">💪 The Motor Effect &amp; F = BIl — 电动机效应与公式 F = BIl <span class="ht-badge">HT</span></div>
+      <div class="idea-name-cn">AQA 4.7.2.2 — The only equation you must recall in this topic</div>
+      <div class="idea-body">
+        When a conductor carrying a current is placed in a magnetic field, a <strong>force</strong> acts on the conductor. The size of this force is given by:
+        <div style="font-family:'Space Mono',monospace; font-size:1.3rem; color:var(--mag-gold); text-align:center; padding:14px; background:rgba(251,191,36,0.06); border-radius:8px; margin:12px 0; letter-spacing:1px;">F = B × I × l</div>
+        <div style="font-size:0.82rem; color:rgba(226,234,248,0.75); line-height:1.9; margin-bottom:10px;">
+          <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">F</span> = force (N) 力（牛顿）<br>
+          <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">B</span> = magnetic flux density (T, tesla) 磁通量密度（特斯拉）<br>
+          <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">I</span> = current (A) 电流（安培）<br>
+          <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">l</span> = length of conductor in the field (m) 导体在磁场中的长度（米）
+        </div>
+        <div style="background:rgba(251,191,36,0.07); border:1px solid rgba(251,191,36,0.22); border-radius:8px; padding:11px 14px;">
+          <div style="color:var(--mag-gold); font-family:'Space Mono',monospace; font-size:0.72rem; margin-bottom:6px;">WORKED EXAMPLE 解题示例</div>
+          <div style="font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.8;">A conductor of length 0.05 m carries a current of 3 A in a field of magnetic flux density 2 T. Calculate the force.<br>
+          <span style="color:var(--mag-teal); font-family:'Space Mono',monospace;">F = B × I × l = 2 × 3 × 0.05 = 0.3 N</span></div>
+          <div style="font-size:0.8rem; color:rgba(251,191,36,0.6); margin-top:6px; line-height:1.7;">一根长0.05 m的导体在磁通量密度为2 T的磁场中通有3 A的电流。计算力。<br>F = B × I × l = 2 × 3 × 0.05 = 0.3 N</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card" style="border-color:rgba(167,139,250,0.35);">
+      <div class="idea-name">🤚 Fleming's Left-Hand Rule — 弗莱明左手定则 <span class="ht-badge">HT</span></div>
+      <div class="idea-name-cn">AQA 4.7.2.2 — Finding the direction of the force</div>
+      <div class="idea-body">Use the <strong>left hand</strong> with all three fingers at right angles to each other:</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:12px 0;">
+        <div style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.3); border-radius:8px; padding:11px; text-align:center; font-size:0.82rem;">
+          <div style="font-size:1.4rem; margin-bottom:5px;">👍</div>
+          <div style="color:var(--mag-gold); font-family:'Space Mono',monospace; font-size:0.75rem; margin-bottom:4px;">thuMb</div>
+          <div>Motion / Force 运动/力</div>
+        </div>
+        <div style="background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.3); border-radius:8px; padding:11px; text-align:center; font-size:0.82rem;">
+          <div style="font-size:1.4rem; margin-bottom:5px;">☝️</div>
+          <div style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.75rem; margin-bottom:4px;">First Finger</div>
+          <div>Field direction 磁场方向 (N→S)</div>
+        </div>
+        <div style="background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.3); border-radius:8px; padding:11px; text-align:center; font-size:0.82rem;">
+          <div style="font-size:1.4rem; margin-bottom:5px;">✌️</div>
+          <div style="color:var(--mag-purple); font-family:'Space Mono',monospace; font-size:0.75rem; margin-bottom:4px;">seCond Finger</div>
+          <div>Current direction 电流方向</div>
+        </div>
+      </div>
+      <div class="idea-cn">用左手，三个手指互相垂直：拇指 = 运动/力方向；食指 = 磁场方向（N→S）；中指 = 电流方向。</div>
+    </div>
+
+    <div class="idea-card" style="border-color:rgba(167,139,250,0.35);">
+      <div class="idea-name">⚡ The Generator Effect — 发电机效应 <span class="ht-badge">HT</span></div>
+      <div class="idea-name-cn">AQA 4.7.3.1 — Inducing a potential difference</div>
+      <div class="idea-body">A potential difference (and current if in a circuit) is induced when:</div>
+      <div style="display:flex; flex-direction:column; gap:8px; margin:12px 0;">
+        <div style="background:rgba(52,211,153,0.07); border-left:3px solid var(--mag-teal); padding:9px 13px; border-radius:0 6px 6px 0; font-size:0.83rem;">
+          A conductor <strong>moves</strong> relative to a magnetic field<br>
+          <span style="font-size:0.78rem; color:rgba(52,211,153,0.65)">导体相对于磁场运动</span>
+        </div>
+        <div style="background:rgba(52,211,153,0.07); border-left:3px solid var(--mag-teal); padding:9px 13px; border-radius:0 6px 6px 0; font-size:0.83rem;">
+          The <strong>magnetic field changes</strong> around a stationary conductor<br>
+          <span style="font-size:0.78rem; color:rgba(52,211,153,0.65)">静止导体周围的磁场发生变化</span>
+        </div>
+      </div>
+      <div style="font-size:0.83rem; color:rgba(226,234,248,0.8); line-height:1.7; margin-bottom:10px;">To <strong>increase</strong> the induced pd/current: move the conductor faster, use a stronger magnet, use more turns of wire. <strong>Reversing</strong> the direction of movement or the field reverses the direction of the induced current.</div>
+      <div class="idea-cn">增大感应电动势/电流：加快导体速度、使用更强的磁铁、使用更多匝数。反转运动方向或磁场方向会反转感应电流方向。</div>
+    </div>
+
+    <div class="idea-card" style="border-color:rgba(167,139,250,0.35);">
+      <div class="idea-name">🔁 Transformers &amp; the National Grid — 变压器与国家电网 <span class="ht-badge">HT</span></div>
+      <div class="idea-name-cn">AQA 4.7.3.4 — How transformers work and the transformer equation</div>
+      <div class="idea-body">A transformer uses electromagnetic induction. An AC current in the primary coil creates a <strong>changing magnetic field</strong> in the iron core, which induces a voltage in the secondary coil.</div>
+      <div style="font-family:'Space Mono',monospace; font-size:1.15rem; color:var(--mag-gold); text-align:center; padding:13px; background:rgba(251,191,36,0.06); border-radius:8px; margin:12px 0;">Vp / Vs = np / ns</div>
+      <div style="font-size:0.82rem; color:rgba(226,234,248,0.75); line-height:1.9; margin-bottom:10px;">
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Vp</span> = primary voltage 初级电压 (V) &nbsp;|&nbsp; <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Vs</span> = secondary voltage 次级电压 (V)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">np</span> = primary turns 初级匝数 &nbsp;|&nbsp; <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">ns</span> = secondary turns 次级匝数
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+        <div style="background:rgba(96,165,250,0.06); border:1px solid rgba(96,165,250,0.2); border-radius:8px; padding:10px; font-size:0.82rem;">
+          <div style="color:var(--mag-blue); font-family:'Space Mono',monospace; font-size:0.72rem; margin-bottom:5px;">STEP-UP 升压</div>
+          More secondary turns (ns &gt; np)<br>Vs &gt; Vp — voltage increases<br>
+          <span style="color:rgba(96,165,250,0.6); font-size:0.78rem">次级匝数多，电压升高</span>
+        </div>
+        <div style="background:rgba(167,139,250,0.06); border:1px solid rgba(167,139,250,0.2); border-radius:8px; padding:10px; font-size:0.82rem;">
+          <div style="color:var(--mag-purple); font-family:'Space Mono',monospace; font-size:0.72rem; margin-bottom:5px;">STEP-DOWN 降压</div>
+          Fewer secondary turns (ns &lt; np)<br>Vs &lt; Vp — voltage decreases<br>
+          <span style="color:rgba(167,139,250,0.6); font-size:0.78rem">次级匝数少，电压降低</span>
+        </div>
+      </div>
+      <div style="font-size:0.82rem; color:rgba(226,234,248,0.8); margin-bottom:6px;">For a <strong>100% efficient</strong> transformer: <span style="font-family:'Space Mono',monospace; color:var(--mag-gold);">Vp × Ip = Vs × Is</span> (power in = power out)</div>
+      <div class="idea-cn">对于100%高效的变压器：输入功率 = 输出功率。国家电网在超高压下输电以减少电能损耗（P = I²R，电流越小损耗越少）。</div>
+      <div class="idea-fact">★ National Grid uses step-up transformers at power stations and step-down transformers near homes 国家电网在发电站使用升压变压器，在住宅附近使用降压变压器</div>
+    </div>
+  </div>
+
+  <!-- ══════════ EQUATIONS ══════════ -->
+  <div class="section" id="section-equations">
+    <div class="section-title">Equations</div>
+    <div class="section-cn">公式 — AQA Higher Tier: two equations for Magnetism · 两个磁学公式</div>
+
+    <div style="background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.25); border-radius:10px; padding:12px 18px; margin-bottom:18px; font-size:0.82rem; color:rgba(226,234,248,0.65); line-height:1.6;">
+      📋 <span style="color:var(--mag-purple); font-weight:bold;">Higher Tier Equations:</span>
+      <span style="background:rgba(248,113,113,0.15); border:1px solid rgba(248,113,113,0.3); color:var(--mag-red); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin:0 4px;">MUST RECALL</span> = memorise and know how to apply.
+      <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3); color:var(--mag-teal); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin:0 4px;">GIVEN</span> = provided on the equation sheet.
+      <br>必须记忆的公式 vs 考试时提供的公式。
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px 26px; margin-bottom:14px;">
+      <div style="font-size:1rem; color:var(--text); margin-bottom:3px;">Force on a Conductor (Motor Effect) 导体所受的力（电动机效应）
+        <span style="background:rgba(248,113,113,0.15); border:1px solid rgba(248,113,113,0.3); color:var(--mag-red); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin-left:8px; vertical-align:middle;">MUST RECALL</span>
+      </div>
+      <div style="font-size:0.83rem; color:var(--muted); margin-bottom:12px;">AQA 4.7.2.2 — Apply when a current-carrying conductor is in a magnetic field</div>
+      <div style="font-family:'Space Mono',monospace; font-size:1.4rem; color:var(--mag-gold); text-align:center; padding:16px; background:rgba(251,191,36,0.06); border-radius:8px; margin:12px 0; letter-spacing:1px;">F = B × I × l</div>
+      <div style="font-size:0.82rem; color:rgba(226,234,248,0.7); line-height:1.9;">
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">F</span> = force 力 (N, newtons 牛顿)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">B</span> = magnetic flux density 磁通量密度 (T, tesla 特斯拉)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">I</span> = current 电流 (A, amperes 安培)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">l</span> = length of conductor in the field 导体在磁场中的长度 (m, metres 米)
+      </div>
+      <div style="margin-top:14px; padding:14px 16px; background:rgba(45,212,191,0.06); border:1px solid rgba(45,212,191,0.2); border-radius:8px;">
+        <div style="font-size:0.72rem; font-family:'Space Mono',monospace; color:var(--mag-teal); letter-spacing:1px; margin-bottom:8px;">WORKED EXAMPLE 解题示例</div>
+        <div style="font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.8;">
+          A wire of length 0.12 m carries a current of 5 A. The magnetic flux density is 0.3 T. Calculate the force.<br>
+          <span style="color:var(--mag-teal); font-family:'Space Mono',monospace;">F = B × I × l = 0.3 × 5 × 0.12 = 0.18 N</span>
+        </div>
+        <div style="font-size:0.8rem; color:rgba(45,212,191,0.65); margin-top:6px; line-height:1.7;">
+          一根长0.12 m的导线通有5 A的电流，磁通量密度为0.3 T。计算力。<br>F = 0.3 × 5 × 0.12 = 0.18 N
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px 26px; margin-bottom:14px;">
+      <div style="font-size:1rem; color:var(--text); margin-bottom:3px;">Transformer Equation 变压器公式
+        <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3); color:var(--mag-teal); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin-left:8px; vertical-align:middle;">GIVEN</span>
+      </div>
+      <div style="font-size:0.83rem; color:var(--muted); margin-bottom:12px;">AQA 4.7.3.4 — Relates the voltages and number of turns in each coil</div>
+      <div style="font-family:'Space Mono',monospace; font-size:1.3rem; color:var(--mag-gold); text-align:center; padding:16px; background:rgba(251,191,36,0.06); border-radius:8px; margin:12px 0; letter-spacing:1px;">Vp / Vs = np / ns</div>
+      <div style="font-size:0.82rem; color:rgba(226,234,248,0.7); line-height:1.9;">
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Vp</span> = primary (input) voltage 初级（输入）电压 (V)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Vs</span> = secondary (output) voltage 次级（输出）电压 (V)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">np</span> = number of turns on primary coil 初级线圈匝数<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">ns</span> = number of turns on secondary coil 次级线圈匝数
+      </div>
+      <div style="margin-top:14px; padding:14px 16px; background:rgba(45,212,191,0.06); border:1px solid rgba(45,212,191,0.2); border-radius:8px;">
+        <div style="font-size:0.72rem; font-family:'Space Mono',monospace; color:var(--mag-teal); letter-spacing:1px; margin-bottom:8px;">WORKED EXAMPLE 解题示例</div>
+        <div style="font-size:0.82rem; color:rgba(226,234,248,0.8); line-height:1.8;">
+          A transformer has 200 primary turns and 1000 secondary turns. The primary voltage is 50 V. Find the secondary voltage.<br>
+          <span style="color:var(--mag-teal); font-family:'Space Mono',monospace;">Vp/Vs = np/ns → 50/Vs = 200/1000 → Vs = 50 × 1000/200 = 250 V</span>
+        </div>
+        <div style="font-size:0.8rem; color:rgba(45,212,191,0.65); margin-top:6px; line-height:1.7;">
+          变压器有200匝初级线圈和1000匝次级线圈，初级电压为50 V。求次级电压。<br>Vs = 50 × 1000/200 = 250 V（升压变压器）
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px 26px; margin-bottom:14px;">
+      <div style="font-size:1rem; color:var(--text); margin-bottom:3px;">Transformer Power Equation 变压器功率公式
+        <span style="background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3); color:var(--mag-teal); font-family:'Space Mono',monospace; font-size:0.68rem; padding:2px 7px; border-radius:8px; margin-left:8px; vertical-align:middle;">GIVEN</span>
+      </div>
+      <div style="font-size:0.83rem; color:var(--muted); margin-bottom:12px;">AQA 4.7.3.4 — For a 100% efficient transformer, power in = power out</div>
+      <div style="font-family:'Space Mono',monospace; font-size:1.3rem; color:var(--mag-gold); text-align:center; padding:16px; background:rgba(251,191,36,0.06); border-radius:8px; margin:12px 0; letter-spacing:1px;">Vp × Ip = Vs × Is</div>
+      <div style="font-size:0.82rem; color:rgba(226,234,248,0.7); line-height:1.9;">
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Ip</span> = primary current 初级电流 (A)<br>
+        <span style="color:var(--mag-blue); font-family:'Space Mono',monospace;">Is</span> = secondary current 次级电流 (A)<br>
+        When voltage is stepped <strong>up</strong>, current is stepped <strong>down</strong> (and vice versa) to conserve power.<br>
+        <span style="color:rgba(96,165,250,0.6)">电压升高时，电流减小（反之亦然），以保持功率守恒。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ GLOSSARY ══════════ -->
+  <div class="section" id="section-glossary">
+    <div class="section-title">Full Glossary</div>
+    <div class="section-cn">完整词汇表 — Search in English or Chinese · 用英文或中文搜索</div>
+    <input type="text" class="search-box" id="glossarySearch" placeholder="Search / 搜索..." oninput="filterGlossary()">
+    <table class="glossary-table">
+      <thead><tr><th>English Term</th><th>中文 / Pinyin</th><th>Definition 定义</th></tr></thead>
+      <tbody id="glossaryBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <div class="section" id="section-quiz">
+    <div class="section-title">Revision Quiz</div>
+    <div class="section-cn">复习测验 — 10 questions on AQA Foundation Magnetism · 10道AQA基础磁学题</div>
+    <div class="quiz-container">
+      <div id="quizActive">
+        <div class="quiz-progress">
+          <div class="progress-text" id="qProgress">Q1 / 10</div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:10%"></div></div>
+          <div class="score-display" id="scoreDisplay">Score: 0</div>
+        </div>
+        <div class="question-box">
+          <div class="question-text" id="questionText"></div>
+          <div class="question-cn" id="questionCN"></div>
+        </div>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="feedback-box" id="feedbackBox"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question &#8594; 下一题</button>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <div class="result-score" id="resultScore"></div>
+        <div class="result-msg" id="resultMsg"></div>
+        <div class="result-cn" id="resultCN"></div>
+        <button class="restart-btn" onclick="restartQuiz()">Restart Quiz 重新开始</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══ NAVIGATION ══
+function showTab(e, id) {
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('section-' + id).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+
+function toggleCard(card) { card.classList.toggle('expanded'); }
+
+// ══ FIELD DIAGRAMS ══
+var fieldInfo = {
+  bar: {
+    title: 'Bar Magnet 条形磁铁',
+    en: 'Field lines come out of the North pole, curve around and enter the South pole. Lines closer together = stronger field. The field is strongest at the poles.',
+    cn: '磁场线从北极出发，弯曲后进入南极。磁场线越密集 = 磁场越强。磁场在磁极处最强。'
+  },
+  attract: {
+    title: 'Unlike Poles Attracting 异极相吸',
+    en: 'Field lines flow from the N pole of one magnet directly to the S pole of the other. The magnets are pulled together — this is attraction.',
+    cn: '磁场线从一块磁铁的北极直接流向另一块磁铁的南极。磁铁被拉向对方——这就是吸引力。'
+  },
+  repel: {
+    title: 'Like Poles Repelling 同极相斥',
+    en: 'Field lines push away from both magnets. A neutral point forms between them where the field cancels out. The magnets push each other apart — this is repulsion.',
+    cn: '磁场线从两块磁铁向外推。两者之间形成中性点，磁场在此抵消。磁铁相互推开——这就是排斥力。'
+  },
+  wire: {
+    title: 'Current in a Wire 导线中的电流',
+    en: 'A current-carrying wire produces circular magnetic field lines around it. The field is stronger closer to the wire (more concentrated lines). Increasing the current increases the field strength.',
+    cn: '载流导线周围产生圆形磁场线。靠近导线处磁场更强（磁场线更密集）。增大电流可增强磁场强度。'
+  },
+  solenoid: {
+    title: 'Solenoid / Electromagnet 螺线管/电磁铁',
+    en: 'Inside the solenoid the field is strong and uniform (parallel lines). Outside it looks just like a bar magnet. Adding an iron core greatly increases the strength. Increasing current or number of coils also increases strength.',
+    cn: '螺线管内部磁场强且均匀（平行线）。外部看起来就像条形磁铁。加入铁芯可大大增强磁场强度。增大电流或增加线圈匝数也能增强磁场。'
+  },
+  fleming: {
+    title: "Fleming's Left-Hand Rule 弗莱明左手定则 (HT)",
+    en: "Hold your LEFT hand with all three pointing at right angles to each other. thuMb = direction of Motion (force). First Finger = direction of magnetic Field (N to S). seCond finger = direction of Current. This gives the direction of force on a current-carrying conductor in a magnetic field.",
+    cn: "左手三指互相垂直：拇指 = 运动（力）方向；食指 = 磁场方向（N→S）；中指 = 电流方向。这给出了载流导体在磁场中所受力的方向。记忆：FBI（Field, Current/Battery, Motion）。"
+  },
+  motor: {
+    title: 'Electric Motor 电动机 (HT)',
+    en: 'A coil of wire carrying a current in a magnetic field rotates because the two sides of the coil experience forces in opposite directions (Fleming\'s left-hand rule). The motor converts electrical energy into kinetic (movement) energy.',
+    cn: '磁场中通有电流的线圈旋转，因为线圈的两侧受到方向相反的力（弗莱明左手定则）。电动机将电能转化为动能。'
+  },
+  transformer: {
+    title: 'Transformer 变压器 (HT)',
+    en: 'An AC current in the primary coil creates a changing magnetic field in the iron core. This induces a voltage in the secondary coil. The ratio of voltages equals the ratio of turns: Vp/Vs = np/ns. Step-up: more secondary turns, higher voltage. Step-down: fewer secondary turns, lower voltage.',
+    cn: '初级线圈中的交流电在铁芯中产生变化的磁场，从而在次级线圈中感应出电压。电压之比等于匝数之比：Vp/Vs = np/ns。升压：次级匝数更多，电压更高。降压：次级匝数更少，电压更低。'
+  }
+};
+
+function showField(e, key) {
+  document.querySelectorAll('.field-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.field-diagram').forEach(function(d){ d.classList.remove('active'); });
+  e.currentTarget.classList.add('active');
+  document.getElementById('field-' + key).classList.add('active');
+  var d = fieldInfo[key];
+  document.getElementById('fieldInfoContent').innerHTML =
+    '<div style="font-family:\'Space Mono\',monospace; color:var(--mag-gold); font-size:0.82rem; margin-bottom:5px;">' + d.title + '</div>' +
+    '<div style="font-size:0.84rem; color:rgba(226,234,248,0.8); line-height:1.6; margin-bottom:8px;">' + d.en + '</div>' +
+    '<div style="font-size:0.83rem; color:rgba(96,165,250,0.75); line-height:1.7;">' + d.cn + '</div>';
+}
+
+// ══ GLOSSARY ══
+var glossaryData = [
+  {en:'Permanent Magnet', cn:'永久磁铁', py:'yǒng jiǔ cí tiě', def:'A material that produces its own magnetic field at all times, without needing an external field.', defCN:'始终产生自身磁场的材料，无需外部磁场。'},
+  {en:'Induced Magnet', cn:'感应磁铁', py:'gǎn yìng cí tiě', def:'A material that only becomes magnetic when placed in a magnetic field. Always causes attraction. Loses magnetism when removed from the field.', defCN:'只有置于磁场中才具有磁性的材料。总是引起吸引力。移出磁场后失去磁性。'},
+  {en:'North Pole', cn:'北极', py:'běi jí', def:'The pole of a magnet from which magnetic field lines emerge. Like poles (N-N) repel; unlike poles (N-S) attract.', defCN:'磁场线从磁铁中出现的极。同性磁极（N-N）相斥；异性磁极（N-S）相吸。'},
+  {en:'South Pole', cn:'南极', py:'nán jí', def:'The pole of a magnet into which magnetic field lines enter. Like poles repel; unlike poles attract.', defCN:'磁场线进入磁铁的极。同性磁极相斥；异性磁极相吸。'},
+  {en:'Magnetic Field', cn:'磁场', py:'cí chǎng', def:'The region around a magnet where a force acts on magnetic materials or other magnets. Represented by field lines from N to S.', defCN:'磁铁周围对磁性材料或其他磁铁施加力的区域。用从北到南的磁场线表示。'},
+  {en:'Field Lines', cn:'磁场线', py:'cí chǎng xiàn', def:'Lines used to represent the direction and strength of a magnetic field. Direction: N to S. Closer together = stronger field. Never cross.', defCN:'用于表示磁场方向和强度的线。方向：北到南。越密集 = 磁场越强。不相交。'},
+  {en:'Magnetic Material', cn:'磁性材料', py:'cí xìng cái liào', def:'A material that is attracted to a magnet. The four magnetic materials are iron, steel, cobalt and nickel.', defCN:'被磁铁吸引的材料。四种磁性材料是铁、钢、钴和镍。'},
+  {en:'Non-contact Force', cn:'非接触力', py:'fēi jiē chù lì', def:'A force that acts between objects that are not physically touching. Magnetic force is a non-contact force.', defCN:'作用于不直接接触的物体之间的力。磁力是一种非接触力。'},
+  {en:'Magnetic Compass', cn:'磁罗盘', py:'cí luó pán', def:'A device containing a small bar magnet (needle) that aligns with a magnetic field. Used to plot field lines and navigate.', defCN:'包含小条形磁铁（指针）的装置，与磁场对齐。用于绘制磁场线和导航。'},
+  {en:"Earth's Magnetic Field", cn:'地球磁场', py:'dì qiú cí chǎng', def:"The magnetic field surrounding the Earth, produced by its magnetic core. The compass needle points north because the Earth's core acts as a large magnet.", defCN:'地球磁性核心产生的包围地球的磁场。指南针指北是因为地球核心像一块大磁铁。'},
+  {en:'Electromagnetism', cn:'电磁学', py:'diàn cí xué', def:'The link between electricity and magnetism: a current-carrying wire produces a magnetic field around it.', defCN:'电与磁之间的联系：载流导线周围产生磁场。'},
+  {en:'Solenoid', cn:'螺线管', py:'luó xiàn guǎn', def:'A coil of wire that, when carrying a current, produces a strong, uniform magnetic field inside. The external field resembles a bar magnet.', defCN:'通有电流时在内部产生强且均匀磁场的线圈。外部磁场类似条形磁铁。'},
+  {en:'Electromagnet', cn:'电磁铁', py:'diàn cí tiě', def:'A solenoid with an iron core. The iron core greatly increases the magnetic field strength. Can be switched on/off by controlling the current.', defCN:'带铁芯的螺线管。铁芯大幅增强磁场强度。可通过控制电流来开关。'},
+  {en:'Iron Core', cn:'铁芯', py:'tiě xīn', def:'A piece of iron placed inside a solenoid to greatly increase the strength of the magnetic field produced.', defCN:'置于螺线管内部以大幅增强产生的磁场强度的铁块。'},
+  {en:'Attraction', cn:'吸引', py:'xī yǐn', def:'The force pulling two objects together. Occurs between unlike magnetic poles (N and S), or between a magnet and an induced magnet.', defCN:'将两个物体拉向对方的力。发生在异性磁极（N和S）之间，或磁铁与感应磁铁之间。'},
+  {en:'Repulsion', cn:'排斥', py:'pái chì', def:'The force pushing two objects apart. Occurs between like magnetic poles (N-N or S-S).', defCN:'将两个物体推开的力。发生在同性磁极（N-N或S-S）之间。'},
+  {en:'Neutral Point', cn:'中性点', py:'zhōng xìng diǎn', def:'A point between two repelling magnets where the magnetic field is zero — the fields from each magnet cancel out exactly.', defCN:'两块相斥磁铁之间磁场为零的点——两块磁铁的磁场在此完全抵消。'},
+  {en:'Uniform Field', cn:'均匀磁场', py:'jūn yún cí chǎng', def:'A magnetic field that has the same strength and direction at all points. Represented by parallel, equally spaced field lines. Found inside a solenoid.', defCN:'在所有点上具有相同强度和方向的磁场。用平行、等间距的磁场线表示。在螺线管内部可以找到。'},
+  {en:'Motor Effect', cn:'电动机效应', py:'diàn dòng jī xiào yìng', def:'(HT) The force on a current-carrying conductor placed in a magnetic field. Force is given by F = BIl.', defCN:'（高级）置于磁场中的载流导体所受的力。力由F = BIl给出。'},
+  {en:"Fleming's Left-Hand Rule", cn:'弗莱明左手定则', py:'fú lái míng zuǒ shǒu dìng zé', def:'(HT) A rule to find the direction of force on a current-carrying conductor. thuMb = Motion, First finger = Field, seCond finger = Current.', defCN:'（高级）确定载流导体所受力方向的规则。拇指 = 运动方向，食指 = 磁场方向，中指 = 电流方向。'},
+  {en:'Magnetic Flux Density', cn:'磁通量密度', py:'cí tōng liàng mì dù', def:'(HT) A measure of the strength of a magnetic field. Symbol B. Unit: tesla (T). Used in F = BIl.', defCN:'（高级）磁场强度的量度。符号B。单位：特斯拉（T）。用于F = BIl。'},
+  {en:'Electric Motor', cn:'电动机', py:'diàn dòng jī', def:'(HT) A device that uses the motor effect to convert electrical energy into kinetic energy. A coil of wire in a magnetic field rotates when a current flows through it.', defCN:'（高级）利用电动机效应将电能转化为动能的装置。通电时，磁场中的线圈旋转。'},
+  {en:'Generator Effect', cn:'发电机效应', py:'fā diàn jī xiào yìng', def:'(HT) The induction of a potential difference when a conductor moves relative to a magnetic field, or when the field around a conductor changes.', defCN:'（高级）当导体相对于磁场运动，或导体周围的磁场变化时，感应出电动势。'},
+  {en:'Alternator', cn:'交流发电机', py:'jiāo liú fā diàn jī', def:'(HT) A generator that produces alternating current (AC) using the generator effect with slip rings.', defCN:'（高级）使用滑环利用发电机效应产生交流电（AC）的发电机。'},
+  {en:'Dynamo', cn:'直流发电机', py:'zhí liú fā diàn jī', def:'(HT) A generator that produces direct current (DC) using the generator effect with a split-ring commutator.', defCN:'（高级）使用分裂环换向器利用发电机效应产生直流电（DC）的发电机。'},
+  {en:'Transformer', cn:'变压器', py:'biàn yā qì', def:'(HT) A device with primary and secondary coils on an iron core that uses electromagnetic induction to step voltage up or down. Vp/Vs = np/ns.', defCN:'（高级）铁芯上有初级和次级线圈的装置，利用电磁感应升高或降低电压。Vp/Vs = np/ns。'},
+  {en:'Step-up Transformer', cn:'升压变压器', py:'shēng yā biàn yā qì', def:'(HT) A transformer where the secondary coil has more turns than the primary, so the output voltage is higher than the input voltage.', defCN:'（高级）次级线圈匝数多于初级线圈的变压器，输出电压高于输入电压。'},
+  {en:'Step-down Transformer', cn:'降压变压器', py:'jiàng yā biàn yā qì', def:'(HT) A transformer where the secondary coil has fewer turns than the primary, so the output voltage is lower than the input voltage.', defCN:'（高级）次级线圈匝数少于初级线圈的变压器，输出电压低于输入电压。'},
+  {en:'Loudspeaker', cn:'扬声器', py:'yáng shēng qì', def:'(HT) Uses the motor effect to convert variations in electrical current into pressure variations in sound waves. Opposite of a microphone.', defCN:'（高级）利用电动机效应将电流变化转换为声波压力变化的装置。与麦克风相反。'},
+  {en:'Microphone', cn:'麦克风', py:'mài kè fēng', def:'(HT) Uses the generator effect to convert pressure variations in sound waves into variations in electrical current. Opposite of a loudspeaker.', defCN:'（高级）利用发电机效应将声波压力变化转换为电流变化的装置。与扬声器相反。'},
+];
+
+function populateGlossary(data) {
+  document.getElementById('glossaryBody').innerHTML = data.map(function(item) {
+    return '<tr><td><div class="gl-en">' + item.en + '</div></td>' +
+           '<td><div class="gl-cn">' + item.cn + '</div><div class="gl-py">' + item.py + '</div></td>' +
+           '<td><div class="gl-def">' + item.def + '</div><div class="gl-def-cn">' + item.defCN + '</div></td></tr>';
+  }).join('');
+}
+
+function filterGlossary() {
+  var q = document.getElementById('glossarySearch').value.toLowerCase();
+  populateGlossary(glossaryData.filter(function(item) {
+    return item.en.toLowerCase().includes(q) || item.cn.includes(q) ||
+           item.py.toLowerCase().includes(q) || item.def.toLowerCase().includes(q);
+  }));
+}
+
+populateGlossary(glossaryData);
+
+// ══ QUIZ ══
+var quizQuestions = [
+  {q:'What is the difference between a permanent magnet and an induced magnet?',
+   qCN:'永久磁铁和感应磁铁的区别是什么？',
+   opts:[{t:'Permanent magnets are stronger 永久磁铁更强',c:false},
+         {t:'A permanent magnet always has its own field; an induced magnet only becomes magnetic in a field 永久磁铁始终有自身磁场；感应磁铁只在磁场中才具有磁性',c:true},
+         {t:'Induced magnets can attract and repel 感应磁铁可以吸引和排斥',c:false},
+         {t:'They are the same thing 它们是一样的',c:false}],
+   fb:'A permanent magnet produces its own field at all times. An induced magnet only becomes magnetic when placed in a magnetic field — and always causes attraction only.',
+   fbCN:'永久磁铁始终产生自身磁场。感应磁铁只有置于磁场中才具有磁性——且只会产生吸引力。'},
+
+  {q:"In Fleming's Left-Hand Rule, what does the thuMb represent?",
+   qCN:'在弗莱明左手定则中，拇指代表什么？',
+   opts:[{t:'The direction of the magnetic field 磁场方向',c:false},
+         {t:'The direction of the current 电流方向',c:false},
+         {t:'The direction of Motion (force) 运动（力）方向',c:true},
+         {t:'The strength of the field 磁场强度',c:false}],
+   fb:"Fleming's Left-Hand Rule: thuMb = Motion/force direction. First finger = Field direction (N to S). seCond finger = Current direction. All three are at right angles to each other.",
+   fbCN:'弗莱明左手定则：拇指 = 运动（力）方向；食指 = 磁场方向（N→S）；中指 = 电流方向。三者互相垂直。'},
+
+  {q:'A conductor of length 0.2 m carries a current of 4 A in a field of flux density 0.5 T. What is the force?',
+   qCN:'一根长0.2 m的导体在磁通量密度为0.5 T的磁场中通有4 A的电流，力是多少？',
+   opts:[{t:'0.2 N',c:false},{t:'0.4 N 正确',c:true},{t:'4 N',c:false},{t:'0.04 N',c:false}],
+   fb:'F = B x I x l = 0.5 x 4 x 0.2 = 0.4 N. Always use F = BIl for the motor effect. Check units: B in tesla, I in amps, l in metres.',
+   fbCN:'F = B × I × l = 0.5 × 4 × 0.2 = 0.4 N。电动机效应始终使用F = BIl。检查单位：B用特斯拉，I用安培，l用米。'},
+
+  {q:'What happens in the generator effect?',
+   qCN:'发电机效应中发生了什么？',
+   opts:[{t:'A current creates a magnetic field 电流产生磁场',c:false},
+         {t:'A changing magnetic field or moving conductor induces a potential difference 变化的磁场或运动的导体感应出电动势',c:true},
+         {t:'Magnets attract iron filings 磁铁吸引铁屑',c:false},
+         {t:'Voltage is always increased 电压总是升高',c:false}],
+   fb:'The generator effect: a potential difference is induced when a conductor moves relative to a magnetic field, or when the field around a conductor changes. If in a circuit, this drives a current.',
+   fbCN:'发电机效应：当导体相对于磁场运动，或导体周围的磁场变化时，会感应出电动势。如果在电路中，这会驱动电流。'},
+
+  {q:'A transformer has 500 primary turns and 100 secondary turns. The primary voltage is 230 V. What is the secondary voltage?',
+   qCN:'一个变压器有500匝初级线圈和100匝次级线圈，初级电压为230 V。次级电压是多少？',
+   opts:[{t:'1150 V',c:false},{t:'230 V',c:false},{t:'46 V 正确',c:true},{t:'23 V',c:false}],
+   fb:'Vp/Vs = np/ns → 230/Vs = 500/100 → Vs = 230 x 100/500 = 46 V. This is a step-down transformer (fewer secondary turns = lower voltage).',
+   fbCN:'Vp/Vs = np/ns → 230/Vs = 500/100 → Vs = 230 × 100/500 = 46 V。这是一个降压变压器（次级匝数少 = 电压降低）。'},
+
+  {q:'What does a loudspeaker use to convert electrical signals to sound?',
+   qCN:'扬声器使用什么将电信号转换为声音？',
+   opts:[{t:'The generator effect 发电机效应',c:false},
+         {t:'The motor effect 电动机效应',c:true},
+         {t:'Nuclear fusion 核聚变',c:false},
+         {t:'Electromagnetic induction 电磁感应',c:false}],
+   fb:'A loudspeaker uses the motor effect. An alternating current through a coil in a magnetic field causes the coil and attached cone to vibrate, producing sound waves. A microphone does the reverse using the generator effect.',
+   fbCN:'扬声器使用电动机效应。通过磁场中线圈的交变电流使线圈和纸盆振动，产生声波。麦克风则相反，使用发电机效应。'},
+
+  {q:'Two north poles are brought close together. What happens?',
+   qCN:'两个北极相互靠近会发生什么？',
+   opts:[{t:'They attract 它们相互吸引',c:false},
+         {t:'Nothing happens 什么都不发生',c:false},
+         {t:'They repel 它们相互排斥',c:true},
+         {t:'They become induced magnets 它们变成感应磁铁',c:false}],
+   fb:'Like poles repel — N-N and S-S always repel each other. Only unlike poles (N-S) attract. These are non-contact forces.',
+   fbCN:'同性磁极相斥——N-N和S-S总是相互排斥。只有异性磁极（N-S）相互吸引。这些是非接触力。'},
+
+  {q:'How does a step-up transformer work?',
+   qCN:'升压变压器如何工作？',
+   opts:[{t:'It has more primary turns than secondary turns 初级匝数多于次级匝数',c:false},
+         {t:'It has more secondary turns than primary turns, increasing voltage 次级匝数多于初级匝数，电压升高',c:true},
+         {t:'It uses DC current 使用直流电',c:false},
+         {t:'It increases both voltage and current 同时升高电压和电流',c:false}],
+   fb:'A step-up transformer has more secondary turns (ns > np), so Vs > Vp. The voltage increases. However, to conserve power (Vp x Ip = Vs x Is), the current must decrease.',
+   fbCN:'升压变压器次级匝数更多（ns > np），所以Vs > Vp，电压升高。然而，为了保持功率守恒（Vp × Ip = Vs × Is），电流必须减小。'},
+
+  {q:'What provides evidence that the core of the Earth is magnetic?',
+   qCN:'什么证明了地球核心具有磁性？',
+   opts:[{t:'The existence of iron ore 铁矿石的存在',c:false},
+         {t:'A compass needle always points north 指南针总是指向北方',c:true},
+         {t:'Earthquakes 地震',c:false},
+         {t:'The Moon orbiting Earth 月球绕地球运行',c:false}],
+   fb:"A compass contains a small bar magnet. The fact that it points north is evidence that the Earth's core acts as a large magnet — producing a magnetic field that the compass aligns with.",
+   fbCN:'指南针内含小条形磁铁。它指向北方这一事实证明地球核心像一块大磁铁——产生指南针与之对齐的磁场。'},
+
+  {q:'How can you increase the size of the induced potential difference in the generator effect?',
+   qCN:'如何增大发电机效应中的感应电动势？',
+   opts:[{t:'Move the conductor more slowly 使导体移动更慢',c:false},
+         {t:'Use a weaker magnet 使用更弱的磁铁',c:false},
+         {t:'Move faster, use a stronger magnet, or use more coil turns 移动更快、使用更强的磁铁或增加线圈匝数',c:true},
+         {t:'Use a plastic conductor 使用塑料导体',c:false}],
+   fb:'To increase induced pd/current in the generator effect: move the conductor faster, use a stronger magnet, or use more turns of coil. Reversing the direction of movement reverses the direction of the induced current.',
+   fbCN:'增大发电机效应中的感应电动势/电流：使导体移动更快、使用更强的磁铁或增加线圈匝数。反转运动方向会反转感应电流方向。'},
+];
+
+var currentQ = 0, score = 0, answered = false;
+
+function loadQuestion() {
+  var q = quizQuestions[currentQ];
+  document.getElementById('qProgress').textContent = 'Q' + (currentQ+1) + ' / ' + quizQuestions.length;
+  document.getElementById('progressFill').style.width = (((currentQ+1)/quizQuestions.length)*100) + '%';
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('questionCN').textContent = q.qCN;
+  document.getElementById('feedbackBox').className = 'feedback-box';
+  document.getElementById('feedbackBox').innerHTML = '';
+  document.getElementById('nextBtn').className = 'next-btn';
+  answered = false;
+  document.getElementById('optionsGrid').innerHTML = q.opts.map(function(opt, i) {
+    return '<button class="option-btn" onclick="selectAnswer(this,' + opt.c + ',' + i + ')">' + opt.t + '</button>';
+  }).join('');
+}
+
+function selectAnswer(btn, correct, idx) {
+  if (answered) return;
+  answered = true;
+  var q = quizQuestions[currentQ];
+  document.querySelectorAll('.option-btn').forEach(function(b, i) {
+    b.disabled = true;
+    if (quizQuestions[currentQ].opts[i].c) b.classList.add('correct');
+  });
+  var fb = document.getElementById('feedbackBox');
+  if (correct) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = '&#10003; Correct! &#27491;&#30830;&#65281;<br><small>' + q.fb + '</small><br><small style="color:rgba(52,211,153,0.7)">' + q.fbCN + '</small>';
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = '&#10007; Not quite. &#19981;&#22826;&#23545;&#12290;<br><small>' + q.fb + '</small><br><small style="color:rgba(248,113,113,0.7)">' + q.fbCN + '</small>';
+  }
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= quizQuestions.length) { showResult(); } else { loadQuestion(); }
+}
+
+function showResult() {
+  document.getElementById('quizActive').style.display = 'none';
+  var res = document.getElementById('quizResult');
+  res.className = 'quiz-result show';
+  var pct = Math.round((score/quizQuestions.length)*100);
+  document.getElementById('resultScore').textContent = score + ' / ' + quizQuestions.length;
+  var msg, cn;
+  if (pct >= 80) { msg = 'Excellent! Outstanding work! &#127775;'; cn = '&#22826;&#26834;&#20102;&#65281;&#25104;&#32489;&#20511;&#31199;&#65281;'; }
+  else if (pct >= 60) { msg = 'Good effort! Keep revising. &#128077;'; cn = '&#24456;&#22909;&#65281;&#32487;&#32493;&#22797;&#32722;&#12290;'; }
+  else { msg = 'Keep practising! &#128170;'; cn = '&#32487;&#32493;&#32451;&#20064;&#65281;'; }
+  document.getElementById('resultMsg').innerHTML = msg;
+  document.getElementById('resultCN').innerHTML = cn;
+}
+
+function restartQuiz() {
+  currentQ = 0; score = 0;
+  document.getElementById('scoreDisplay').textContent = 'Score: 0';
+  document.getElementById('quizActive').style.display = 'block';
+  document.getElementById('quizResult').className = 'quiz-result';
+  loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
